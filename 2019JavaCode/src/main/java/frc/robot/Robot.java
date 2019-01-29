@@ -8,8 +8,19 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+<<<<<<< HEAD
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+=======
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.*;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Ultrasonic;
+>>>>>>> 181a23f8b2935fb2fe8759654bc2be8274adad38
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,18 +34,39 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+<<<<<<< HEAD
 
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
+=======
+  
+  //  Ultrasonic ultra = new Ultrasonic(6,7); // creates the ultra object andassigns ultra to be an ultrasonic sensor which uses DigitalOutput 1 for 
+       // the echo pulse and DigitalInput 1 for the trigger pulse
+
+  /*
+   * This function is run when the robot is first started up and should be
+   * used for any initialization code.
+   */
+
+>>>>>>> 181a23f8b2935fb2fe8759654bc2be8274adad38
   @Override
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+<<<<<<< HEAD
   }
 
+=======
+
+  //  ultra.setAutomaticMode(true); // turns on automatic mode
+
+  }
+
+
+>>>>>>> 181a23f8b2935fb2fe8759654bc2be8274adad38
   /**
    * This function is called every robot packet, no matter the mode. Use
    * this for items like diagnostics that you want ran during disabled,
@@ -45,8 +77,48 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+<<<<<<< HEAD
   }
 
+=======
+  
+  //  double UltraInInches = ultra.getRangeInches();
+  //  double UltraInMM = ultra.getRangeMM();
+  
+    // reads the range on the ultrasonic sensor
+  //  System.out.println("UltraInInches:" + UltraInInches);
+  //  System.out.println(UltraInMM); 
+  //  System.out.print("UltraInMM");  
+
+
+   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+   NetworkTableEntry tx = table.getEntry("tx");
+   NetworkTableEntry ty = table.getEntry("ty");
+   NetworkTableEntry ta = table.getEntry("ta");
+
+  //read values periodically
+  double x = tx.getDouble(0.0);
+  double y = ty.getDouble(0.0);
+  double area = ta.getDouble(0.0);
+
+  //post to smart dashboard periodically
+  SmartDashboard.putNumber("LimelightX", x);
+  SmartDashboard.putNumber("LimelightY", y);
+  SmartDashboard.putNumber("LimelightArea", area);
+    
+  if (x <= 1.0) {
+  System.out.println(x);
+    }
+  if (y <= 1.0) {
+    System.out.println(y);
+    }
+  if (x <= 1.0) {
+    System.out.println(area);
+    }
+
+
+}
+>>>>>>> 181a23f8b2935fb2fe8759654bc2be8274adad38
   /**
    * This autonomous (along with the chooser code above) shows how to select
    * between different autonomous modes using the dashboard. The sendable
