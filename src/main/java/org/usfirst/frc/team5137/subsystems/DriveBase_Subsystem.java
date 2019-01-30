@@ -13,6 +13,10 @@ public class DriveBase_Subsystem extends Subsystem {
 	Spark leftDriveMotor = RobotMap.leftDriveMotor;
 	Spark rightDriveMotor = RobotMap.rightDriveMotor;
 	DifferentialDrive hotWheels = RobotMap.hotWheels;
+	private double previousDriveSpeed = 0;
+	
+	public static double driveSpeed = 0; // for DisplayValues
+
 
 	protected void initDefaultCommand() {
 		setDefaultCommand(new ArcadeDrive());
@@ -35,7 +39,58 @@ public class DriveBase_Subsystem extends Subsystem {
 	 * That allows one joystick on a controller to control both forwards/backwards and left and right (via SlideDrive)
 	 * and delegates rotation to a different joystick
 	 */
-	public void arcadeDrive(Joystick jackBlack) {
+	
+	public void rampArcadeDrive(Joystick jackBlack) {
+		double driveJoystick = jackBlack.getRawAxis(1);
+		double turnJoystick = jackBlack.getRawAxis(4);
+		
+		double newDriveSpeed;
+		newDriveSpeed = accelerate(driveJoystick, previousDriveSpeed, .4, .05);
+		driveSpeed = newDriveSpeed; // to print to SmartDashboard
+		previousDriveSpeed = newDriveSpeed;
+		
+		hotWheels.arcadeDrive(newDriveSpeed, -turnJoystick);
+	}
+
+	public double accelerate(double joystickValue, double previousSpeed, double minSpeed, double incValue) {
+		int delay = 25;
+		double newSpeed;
+		
+		// effectively a deadzone with range +-minValue
+		if (Math.abs(joystickValue) > minSpeed && Math.abs(previousSpeed) < minSpeed) {
+			newSpeed = Math.signum(joystickValue) * minSpeed;
+		} else {
+			newSpeed = previousSpeed;
+		}
+		
+		if (previousSpeed < joystickValue) newSpeed += incValue;
+		else if (previousSpeed > joystickValue) newSpeed -= incValue;
+		else newSpeed = previousSpeed; // necessary??
+		try {
+			Thread.sleep(delay);
+		} catch (InterruptedException e) {
+
+		}
+		
+		return newSpeed;
+	}
+
+	public void driveStraight(double speed) {
+		hotWheels.arcadeDrive(-speed, 0);
+	}
+	
+	// CW is positive, CCW is negative
+	public void pivot(double speed) {
+		hotWheels.arcadeDrive(0, -speed); 
+	}
+	
+	public void stop() {
+		hotWheels.arcadeDrive(0, 0);
+	}
+
+
+
+		//public void arcadeDrive(Joystick jackBlack) {
 	   /*
         * x' = a(x^b) + (1-a)x
         *
@@ -59,7 +114,7 @@ public class DriveBase_Subsystem extends Subsystem {
         */
         
         // dead zone included
-        double rawDrive = adjustJoystickValue(jackBlack.getRawAxis(1), .2);
+      /*  double rawDrive = adjustJoystickValue(jackBlack.getRawAxis(1), .2);
         double rawTurn = adjustJoystickValue(jackBlack.getRawAxis(4), .2); 
         
         double sensitivityDrive = .95;
@@ -75,18 +130,6 @@ public class DriveBase_Subsystem extends Subsystem {
         
         hotWheels.arcadeDrive(exponentialDrive, exponentialTurn);
 	}
-	
-	public void driveStraight(double speed) {
-		hotWheels.arcadeDrive(-speed, 0);
-	}
-	
-	// CW is positive, CCW is negative
-	public void pivot(double speed) {
-		hotWheels.arcadeDrive(0, -speed); 
-	}
-	
-	public void stop() {
-		hotWheels.arcadeDrive(0, 0);
-	}
+	*/
 
 }
