@@ -43,15 +43,15 @@ public class DriveBase_Subsystem extends Subsystem {
 	
 	public void rampArcadeDrive(Joystick jackBlack) {
 		double distanceIN = Robot.distanceIN;
-		double driveJoystick = jackBlack.getRawAxis(1);
-		double turnJoystick = jackBlack.getRawAxis(4);
+		double driveJoystick = jackBlack.getRawAxis(1); // same for 2019 & 2018
+		double turnJoystick = jackBlack.getRawAxis(4); // 0 for big ancient joystick, 4 for xbox
 		
 		double newDriveSpeed;
 		newDriveSpeed = accelerate(driveJoystick, previousDriveSpeed, .4, .05);
 		driveSpeed = newDriveSpeed; // to print to SmartDashboard
 		previousDriveSpeed = newDriveSpeed;
 		if (distanceIN > 6.0 || driveJoystick >= 0.1) {
-			hotWheels.arcadeDrive(newDriveSpeed, -turnJoystick);
+			hotWheels.arcadeDrive(newDriveSpeed, -turnJoystick); //negative turn for 2018 robot
 		}
 		
 	}
