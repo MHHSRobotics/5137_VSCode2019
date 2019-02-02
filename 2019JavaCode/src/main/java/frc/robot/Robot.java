@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
     driveBase_Subsystem = new DriveBase_Subsystem();
 	  pincher_Subsystem = new Pincher_Subsystem();
     cargoBox_Subsystem = new CargoBox_Subsystem();
-     	
+    lift_Subsystem = new Lift_Subsystem();
 		oi = new OI(); // gotta go after all the subsystems!
 
 
