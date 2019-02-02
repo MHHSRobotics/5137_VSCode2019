@@ -25,8 +25,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
-/**
+import frc.robot.subsystems.Lift_Subsystem;/**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
  * documentation. If you change the name of this class or the package after
@@ -38,7 +37,7 @@ public class Robot extends TimedRobot {
   public static DriveBase_Subsystem driveBase_Subsystem; 
   public static Pincher_Subsystem pincher_Subsystem;	
   public static CargoBox_Subsystem cargoBox_Subsystem;
-
+  public static Lift_Subsystem lift_Subsystem;
 	public static OI oi;
 
   public static UsbCamera frontCamera;
@@ -53,8 +52,8 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   
-  //  Ultrasonic ultra = new Ultrasonic(6,7); // creates the ultra object andassigns ultra to be an ultrasonic sensor which uses DigitalOutput 1 for 
-       // the echo pulse and DigitalInput 1 for the trigger pulse
+  Ultrasonic ultrasonic = new Ultrasonic(6,7);
+  public static double distanceIN;
 
   /*
    * This function is run when the robot is first started up and should be
@@ -69,28 +68,28 @@ public class Robot extends TimedRobot {
     driveBase_Subsystem = new DriveBase_Subsystem();
 	  pincher_Subsystem = new Pincher_Subsystem();
     cargoBox_Subsystem = new CargoBox_Subsystem();
-     	
+    lift_Subsystem = new Lift_Subsystem();
 		oi = new OI(); // gotta go after all the subsystems!
 
 
-    frontCamera = CameraServer.getInstance().startAutomaticCapture();
-		frontCamera.setResolution(320, 240);
-    frontCamera.setFPS(30); 
+    // frontCamera = CameraServer.getInstance().startAutomaticCapture();
+		// frontCamera.setResolution(320, 240);
+    // frontCamera.setFPS(30); 
     
-    leftCamera = CameraServer.getInstance().startAutomaticCapture();
-		leftCamera.setResolution(320, 240);
-    leftCamera.setFPS(30); 
+    // leftCamera = CameraServer.getInstance().startAutomaticCapture();
+		// leftCamera.setResolution(320, 240);
+    // leftCamera.setFPS(30); 
     
-    rightCamera = CameraServer.getInstance().startAutomaticCapture();
-		rightCamera.setResolution(320, 240);
-		rightCamera.setFPS(30); 
+    // rightCamera = CameraServer.getInstance().startAutomaticCapture();
+		// rightCamera.setResolution(320, 240);
+		// rightCamera.setFPS(30); 
 
 
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
-  //  ultra.setAutomaticMode(true); // turns on automatic mode
+    ultrasonic.setAutomaticMode(true); // turns on automatic mode
 
   }
 
@@ -105,8 +104,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-  
-  //  double UltraInInches = ultra.getRangeInches();
+    //Ultrasonic code. Finds and outputs the distance between the sensor and the robot.
+    distanceIN = ultrasonic.getRangeInches();
   //  double UltraInMM = ultra.getRangeMM();
   
     // reads the range on the ultrasonic sensor
