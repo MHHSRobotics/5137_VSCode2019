@@ -28,11 +28,9 @@ public class PincherBite_Command extends Command {
   @Override
   protected void execute() {
     if (Pincher_Subsystem.getBitePincherStatus() != DoubleSolenoid.Value.kReverse) { //CHANGES NEEDED
-      System.out.println("Trying to close");
       Pincher_Subsystem.closePincher();
     }
     else {
-      System.out.println("Trying to open");
       Pincher_Subsystem.openPincher();
     }
     isFinished = true;

@@ -44,25 +44,23 @@ public class Pincher_Subsystem extends Subsystem {
   }
 
   public static void openPincher() {
-		pincherBitePiston.set(DoubleSolenoid.Value.kForward);
+		pincherBitePiston.set(DoubleSolenoid.Value.kForward); //CHANGES NEEDED
 	}
 	
 	public static void closePincher() {
-		pincherBitePiston.set(DoubleSolenoid.Value.kReverse);
+		pincherBitePiston.set(DoubleSolenoid.Value.kReverse); //CHANGES NEEDED
 	}
   
   public static void extendSlidePiston() {
-		pincherSlidePiston.set(DoubleSolenoid.Value.kForward);
+		pincherSlidePiston.set(DoubleSolenoid.Value.kForward); //CHANGES NEEDED
 	}
 	
 	public static void retractSlidePiston() {
-		pincherSlidePiston.set(DoubleSolenoid.Value.kReverse);
+		pincherSlidePiston.set(DoubleSolenoid.Value.kReverse); //CHANGES NEEDED
 	}
 
   public void stop() {
-
     pincherBitePiston.set(DoubleSolenoid.Value.kOff);
     pincherSlidePiston.set(DoubleSolenoid.Value.kOff);
-
   }
 }
