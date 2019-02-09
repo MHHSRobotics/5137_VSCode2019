@@ -40,6 +40,30 @@ public class DriveBase_Subsystem extends Subsystem {
 	 * That allows one joystick on a controller to control both forwards/backwards and left and right (via SlideDrive)
 	 * and delegates rotation to a different joystick
 	 */
+	public void VisionDrive() {
+        double centerX;
+        double targetX;
+		centerX = Robot.centerX;
+		targetX = Robot.targetX;
+        
+        if (centerX - targetX > 1) {
+		RobotMap.hotWheels.arcadeDrive(0, -.5);
+		System.out.print("turning positive");
+			//double turn = centerX - (IMG_WIDTH / 2);
+        // RobotMap.hotWheels.arcadeDrive( 0 , -turn * 0.005);
+        // System.out.println("centerX = " + centerX);
+        // System.out.println("turn = " + turn);
+		}
+		else if (centerX - targetX < 1) {
+		RobotMap.hotWheels.arcadeDrive(0, .5);
+		System.out.print("turning negative");
+		}else {
+			RobotMap.hotWheels.arcadeDrive(0,0);
+			System.out.print("not turning");
+		}
+
+
+    }
 	
 	public void rampArcadeDrive(Joystick jackBlack) {
 		double distanceIN = Robot.distanceIN;

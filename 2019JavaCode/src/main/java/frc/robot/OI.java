@@ -1,5 +1,6 @@
 package frc.robot;
 
+import frc.robot.commands.AimBot_Command;
 import frc.robot.commands.GetDistance;
 import frc.robot.commands.LiftRobot_Command;
 import frc.robot.commands.LowerBack_Command;
@@ -23,6 +24,7 @@ public class OI {
 	public JoystickButton liftRobotButton;
 	public JoystickButton lowerFrontButton;
 	public JoystickButton lowerBackButton;
+	public JoystickButton aimBotButton;
 	// public JoystickButton raiseIntakeButton;
 	// public JoystickButton lowerIntakeButton;
 	// public JoystickButton intakeButton;
@@ -51,6 +53,9 @@ public class OI {
 		
 		lowerBackButton = new JoystickButton(jackBlack, 6); //CHANGES NEEDED
 		lowerBackButton.whileHeld(new LowerBack_Command());
+
+		aimBotButton = new JoystickButton(jackBlack, 7); //CHANGES NEEDED
+		aimBotButton.whileHeld(new AimBot_Command());
 		
 	/*	outtakeButton = new JoystickButton(jackBlack, 2); // B
 		outtakeButton.whileHeld(new Outtake());

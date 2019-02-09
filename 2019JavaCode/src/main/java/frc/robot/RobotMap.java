@@ -45,32 +45,32 @@ public class RobotMap {
 		
 		hotWheels = new DifferentialDrive(leftDriveMotor, rightDriveMotor);
 		
-		liftMotor = new Spark(3);
-		liftMotor.setInverted(true);
+		// liftMotor = new Spark(3);
+		// liftMotor.setInverted(true);
 		
-		rotateIntakeMotor = new Spark(4); 
-		intakeMotor = new Spark(5); 
-		intakeMotor.setInverted(true);
+		// rotateIntakeMotor = new Spark(4); 
+		// intakeMotor = new Spark(5); 
+		// intakeMotor.setInverted(true);
 		
-		leftEncoder = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
-		leftEncoder.setDistancePerPulse(.1173); 
-		leftEncoder.setMinRate(10);
+		// leftEncoder = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
+		// leftEncoder.setDistancePerPulse(.1173); 
+		// leftEncoder.setMinRate(10);
 		
-		rightEncoder = new Encoder(4, 5, false, Encoder.EncodingType.k4X);
-		rightEncoder.setDistancePerPulse(.1173);
-		rightEncoder.setMinRate(10);
+		// rightEncoder = new Encoder(4, 5, false, Encoder.EncodingType.k4X);
+		// rightEncoder.setDistancePerPulse(.1173);
+		// rightEncoder.setMinRate(10);
 		
-		upperLimitSwitch = new DigitalInput(9);
-		lowerLimitSwitch = new DigitalInput(8);
+		// upperLimitSwitch = new DigitalInput(9);
+		// lowerLimitSwitch = new DigitalInput(8);
 
 
 		// compressor = new Compressor(0);
 		// compressor.setClosedLoopControl(true);
 		
-		pincherBitePiston = new DoubleSolenoid(0, 1);
-		//pincherSlidePiston = new DoubleSolenoid(2, 3);
-		frontLiftPiston = new DoubleSolenoid(4, 5);
-		backLiftPiston = new DoubleSolenoid(6, 7);
+		// pincherBitePiston = new DoubleSolenoid(0, 1);
+		// pincherSlidePiston = new DoubleSolenoid(2, 3);
+		// frontLiftPiston = new DoubleSolenoid(4, 5);
+		// backLiftPiston = new DoubleSolenoid(6, 7);
 		
 	}
 	
