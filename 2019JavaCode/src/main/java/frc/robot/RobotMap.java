@@ -36,7 +36,7 @@ public class RobotMap {
 	
 	public static SpeedControllerGroup thisIsJustATestIgnoreThis;
 	
-	public static void init() { //CHANGES NEEDED for all ports and stuff
+	public static void init() { //CHANGES NEEDED for everything
 		leftDriveMotor = new Spark(0); // 2017 and 2018 bot are 1
 		leftDriveMotor.setInverted(true);
 		
@@ -71,6 +71,7 @@ public class RobotMap {
 		// pincherSlidePiston = new DoubleSolenoid(2, 3);
 		// frontLiftPiston = new DoubleSolenoid(4, 5);
 		// backLiftPiston = new DoubleSolenoid(6, 7);
+		cargoBoxPiston = new DoubleSolenoid(69, 420);
 		
 	}
 	

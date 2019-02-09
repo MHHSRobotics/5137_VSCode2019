@@ -9,11 +9,15 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.CargoBox_Subsystem;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
-public class CloseCargoBox_Command extends Command {
-  public CloseCargoBox_Command() {
-    requires(Robot.pincher_Subsystem);
+public class CargoBox_Command extends Command {
+  public CargoBox_Command() {
+    requires(Robot.cargoBox_Subsystem);
   }
+
+  boolean isFinished = false;
 
   // Called just before this Command runs the first time
   @Override
@@ -23,26 +27,31 @@ public class CloseCargoBox_Command extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.cargoBox_Subsystem.openBox();
+    if (CargoBox_Subsystem.getBoxStatus() != DoubleSolenoid.Value.kReverse) { //CHANGES NEEDED
+      CargoBox_Subsystem.openBox();
+    }
+    else {
+      CargoBox_Subsystem.closeBox();
+    }
+    isFinished = true;
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return isFinished;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.cargoBox_Subsystem.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.cargoBox_Subsystem.stop();
+    end();
   }
   
 }

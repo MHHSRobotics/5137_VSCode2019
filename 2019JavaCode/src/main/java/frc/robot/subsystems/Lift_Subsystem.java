@@ -8,6 +8,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
@@ -20,6 +22,8 @@ public class Lift_Subsystem extends Subsystem {
 
   public static DoubleSolenoid frontLiftPiston = RobotMap.frontLiftPiston;
   public static DoubleSolenoid backLiftPiston = RobotMap.backLiftPiston;
+  public static Spark liftMotor = RobotMap.liftMotor;
+  public static Joystick jackBlack;
 
   @Override
   public void initDefaultCommand() {
@@ -36,5 +40,10 @@ public class Lift_Subsystem extends Subsystem {
 
   public static void lowerBack() {
     backLiftPiston.set(DoubleSolenoid.Value.kReverse); //CHANGES NEEDED
+  }
+
+  public static void driveLift() {
+    double driveLift = jackBlack.getRawAxis(5); //Right Analog Up/Down
+    liftMotor.set(-driveLift); //CHANGES NEEDED
   }
 }

@@ -12,12 +12,9 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
-
-
-
 public class CargoBox_Subsystem extends Subsystem {
 
-  DoubleSolenoid cargoBoxPiston = RobotMap.cargoBoxPiston;
+  public static DoubleSolenoid cargoBoxPiston = RobotMap.cargoBoxPiston;
 
   @Override
   public void initDefaultCommand() {
@@ -25,16 +22,19 @@ public class CargoBox_Subsystem extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
+  public static DoubleSolenoid.Value getBoxStatus() {
+    return cargoBoxPiston.get();
+  }
 
-  public void openBox() {
+  public static void openBox() {
     cargoBoxPiston.set(Value.kForward);
   }
 
-  public void closeBox() {
+  public static void closeBox() {
     cargoBoxPiston.set(Value.kReverse);
   }
 
-  public void stop() {
+  public static void stop() {
     cargoBoxPiston.set(Value.kOff);
   }
   
