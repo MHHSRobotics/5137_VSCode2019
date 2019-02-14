@@ -9,22 +9,46 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-public class DriveBase_Subsystem extends Subsystem {
-	// Lines 14-19 are used to call all required bits into the subsystem and give them names to respond to
+public class DriveBase_Subsystem extends Subsystem { /*Welcome to the DriveBase subsystem, where all the
+	driving happens It may seem a bit messy at first, but if you take a closer look at it, it actually
+	follows the same pattern as the other subsystems. There is just a lot more stuff to look at.
+	
+	This section is simply an importation of stuff from RobotMap into here for our own use, as well
+	as defining some informational values that we'll be using.*/
 	Spark leftDriveMotor = RobotMap.leftDriveMotor;
 	Spark rightDriveMotor = RobotMap.rightDriveMotor;
 	DifferentialDrive hotWheels = RobotMap.hotWheels;
 	private double previousDriveSpeed = 0;
-	
 	public static double driveSpeed = 0; // for DisplayValues
 
-
-	protected void initDefaultCommand() {
+	protected void initDefaultCommand() { /*We have a default command this time: ArcadeDrive. Arcade
+		Drive is a form of driving in which you use one analog stick to control forwards and backwards
+		movement, and turn left and right with the other stick. We want this to be running 24/7, so
+		we will use this command and this command alone to drive the robot. No other commands are wired
+		to the DriveBase subsystem so as to prevent it from getting interrupted and ending.
+		
+		We should take a look at ArcadeDrive to understand what it's doing.*/
 		setDefaultCommand(new ArcadeDrive());
 	}
 	
-	//	An algorithm developed by the fantastic Sarah C. Lincoln that adjusts the joysticks
-	//	to run scaled to the deadZone
+	/*This algorithm, created by the fantastic Sarah C. Lincoln, creates a deadzone for the analog
+	sticks. What does that mean exactly? Well, the controller measures the position of the sticks to an
+	incredibly accurate degree--perhaps a little too accurate. We want a range of values for the sticks
+	which will be ignored by the drive code; otherwise, the robot will constantly be trying to make
+	tiny movements based on the sticks being in positions between, say, 0.2 and -0.2. This formula
+	takes values that are close to 0 and simply makes them 0.
+	
+	This may be the first time you've seen a method in our code that has stuff inside its parentheses.
+	These are simply parameters for our method. Remember how you can hover over methods to see their
+	parameters? Well, we can create methods with parameters too! Essentially, parameters are like vari-
+	ables in a function, like x and y. Whenever we call this method elsewhere in our code, we declare
+	the values of x and y and then the formula does the math. In this particular case we declare what
+	joystick we're using (jackBlack or redDead) and what our deadzone will be (+ or - 0.2, for example).
+	
+	As it stands, the robot never actually uses this code for anything because neither the ArcadeDrive
+	command nor any other methods in the subsystem actually call this method. Why did I give it an
+	explanation, then? Well, it certainly wasn't that I just didn't realize that fact until later and
+	was too proud of my work to get rid of it...that would be just silly, wouldn't it? Ha ha...*/
 	public double adjustJoystickValue(double joystick, double deadZone) {
 		double adjustedJoystick;
 		if (Math.abs(joystick) < deadZone) {
@@ -35,28 +59,33 @@ public class DriveBase_Subsystem extends Subsystem {
 		return adjustedJoystick;
 	}
 	
-	/* 
-	 * Arcade Drive is a form of driving...
-	 * That allows one joystick on a controller to control both forwards/backwards and left and right (via SlideDrive)
-	 * and delegates rotation to a different joystick
-	 */
-	
+	/*Here's the method that ArcadeDrive calls. As you can see, the method establishes a parameter
+	with the properties of a Joystick, so we were right about our prediction that the parameter
+	selects the joystick we want to use. Right then, so what's going on?*/
 	public void rampArcadeDrive(Joystick jackBlack) {
-		double distanceIN = Robot.distanceIN;
+		/*Our first course of action is to get the values of the analog sticks from the controller.
+		Our second course of action is to use the distance variables from the Ultrasonic code we
+		created all the way back in Robot.java (revisit it if you like).*/
 		double driveJoystick = jackBlack.getRawAxis(1);
 		double turnJoystick = jackBlack.getRawAxis(4);
+		double distanceIN1 = Robot.distanceIN1;
+		double distanceIN2 = Robot.distanceIN2;
 		
+		/*After that, we create a variable newDriveSpeed and set it to a value. What value is it?
+		That is determined by the method accelerate(). We'll need to jump down to that method in
+		order to determine what we're getting here.*/
 		double newDriveSpeed;
 		newDriveSpeed = accelerate(driveJoystick, previousDriveSpeed, .4, .05);
 		driveSpeed = newDriveSpeed; // to print to SmartDashboard
 		previousDriveSpeed = newDriveSpeed;
-		if (distanceIN > 6.0 || driveJoystick >= 0.1) {
+		if (distanceIN1 > 6.0 || driveJoystick >= 0.1) {
 			hotWheels.arcadeDrive(newDriveSpeed, -turnJoystick);
 		}
 		
 	}
 
-	public double accelerate(double joystickValue, double previousSpeed, double minSpeed, double incValue) {
+	public double accelerate(double joystickValue, double previousSpeed, double minSpeed,
+	double incValue) {
 		int delay = 25;
 		double newSpeed;
 		

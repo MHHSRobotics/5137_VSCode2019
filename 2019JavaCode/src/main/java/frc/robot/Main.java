@@ -5,6 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+/*Honestly I don't entirely understand what this is. It's just some sort of startup code. Don't worry
+about it, and don't mess with it. Head on to Robot.java.*/
+
 package frc.robot;
 
 import edu.wpi.first.wpilibj.RobotBase;

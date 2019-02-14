@@ -3,19 +3,23 @@ package frc.robot.commands;
 import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-/*
- * Arcade Drive is a form of driving...
- * That allows one joystick on a controller to control both forwards/backwards and left and right (via SlideDrive)
- * and delegates rotation to a different joystick.
- */
+
 public class ArcadeDrive extends Command {
 	
 	public ArcadeDrive() { 
 		requires(Robot.driveBase_Subsystem);
 	}
 
-	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
+	protected void execute() { /*As you can see, whenever ArcadeDrive is scheduled to execute (which,
+		due to being the default, is every 20ms), the code runs the method rampArcadeDrive() in the
+		DriveBase subsystem. No other commands are here to potentially interrupt ArcadeDrive, so the
+		isFinished() and interrupted() methods are irrelevant.
+		
+		The method has a variable inside its parentheses, which, as you should know by now since you're
+		a pro, means the method has a parameter. We don't know what the parameter means just yet, but
+		judging by the fact that the variable used here is the controller name jackBlack from the OI,
+		I would predict that the parameter is the name of the controller that will be used. Let's jump
+		back to the DriveBase to see what this method does.*/
 		Robot.driveBase_Subsystem.rampArcadeDrive(Robot.oi.jackBlack);
 	}
 
