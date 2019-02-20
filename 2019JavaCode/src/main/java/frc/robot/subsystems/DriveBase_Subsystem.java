@@ -41,32 +41,37 @@ public class DriveBase_Subsystem extends Subsystem {
 	 * and delegates rotation to a different joystick
 	 */
 	public void VisionDrive() {
-        double centerX;
-        double targetX;
-		centerX = Robot.centerX;
-		targetX = Robot.targetX;
+    
+		double centerX = Robot.centerX;
+		double targetX = Robot.targetX;
+		double rightDistanceIN = Robot.rightDistanceIN;
+		double distanceToStop = 25.00;
         
-        if (centerX - targetX > 1) {
-		RobotMap.hotWheels.arcadeDrive(0, -.5);
-		System.out.print("turning positive");
-			//double turn = centerX - (IMG_WIDTH / 2);
+        if (centerX - targetX > 3 && rightDistanceIN >= distanceToStop) {
+		RobotMap.hotWheels.arcadeDrive(-.3, .90);
+		// System.out.print("turning positive");
         // RobotMap.hotWheels.arcadeDrive( 0 , -turn * 0.005);
         // System.out.println("centerX = " + centerX);
         // System.out.println("turn = " + turn);
 		}
-		else if (centerX - targetX < 1) {
-		RobotMap.hotWheels.arcadeDrive(0, .5);
-		System.out.print("turning negative");
-		}else {
-			RobotMap.hotWheels.arcadeDrive(0,0);
-			System.out.print("not turning");
-		}
+		else if (centerX - targetX < -3 && rightDistanceIN >= distanceToStop) {
+		RobotMap.hotWheels.arcadeDrive(-.3, -.90);
+		// System.out.print("turning negative");
+		}else if (rightDistanceIN >= distanceToStop) {
+			RobotMap.hotWheels.arcadeDrive(-.7, 0);
+			// System.out.print("not turning");
+			}
+		else if (rightDistanceIN <= distanceToStop) {
+			RobotMap.hotWheels.arcadeDrive(0, 0);
+			// System.out.print("not turning");
+			}
+		
 
 
     }
 	
 	public void rampArcadeDrive(Joystick jackBlack) {
-		double distanceIN = Robot.distanceIN;
+		double leftDistanceIN = Robot.leftDistanceIN;
 		double driveJoystick = jackBlack.getRawAxis(1); // same for 2019 & 2018
 		double turnJoystick = jackBlack.getRawAxis(4); // 0 for big ancient joystick, 4 for xbox
 		
@@ -74,9 +79,10 @@ public class DriveBase_Subsystem extends Subsystem {
 		newDriveSpeed = accelerate(driveJoystick, previousDriveSpeed, .4, .05);
 		driveSpeed = newDriveSpeed; // to print to SmartDashboard
 		previousDriveSpeed = newDriveSpeed;
-		if (distanceIN > 6.0 || driveJoystick >= 0.1) {
-			hotWheels.arcadeDrive(newDriveSpeed, -turnJoystick); //negative turn for 2018 robot
-		}
+		// if (distanceIN > 6.0 || driveJoystick >= 0.1) {
+			hotWheels.arcadeDrive(newDriveSpeed/1.5, -turnJoystick); //negative turn for 2018 robot
+		// }
+		// System.out.println(newDriveSpeed + " " + -turnJoystick + " ");
 		
 	}
 

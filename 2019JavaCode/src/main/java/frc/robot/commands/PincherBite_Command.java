@@ -27,12 +27,18 @@ public class PincherBite_Command extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Pincher_Subsystem.getBitePincherStatus() != DoubleSolenoid.Value.kReverse) { //CHANGES NEEDED
+    System.out.println(Pincher_Subsystem.getBitePincherStatus());
+    if (Pincher_Subsystem.getBitePincherStatus() != DoubleSolenoid.Value.kForward) { //CHANGES NEEDED
       Pincher_Subsystem.closePincher();
+      System.out.println("closing pincher");
+
     }
     else {
       Pincher_Subsystem.openPincher();
+      System.out.println("opening pincher");
     }
+    System.out.println(Pincher_Subsystem.getBitePincherStatus());
+    System.out.println();
     isFinished = true;
   }
 
@@ -52,6 +58,5 @@ public class PincherBite_Command extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

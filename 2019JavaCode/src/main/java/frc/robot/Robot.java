@@ -9,6 +9,7 @@ package frc.robot;
 
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.IterativeRobotBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -40,6 +41,11 @@ public class Robot extends TimedRobot {
   public static CargoBox_Subsystem cargoBox_Subsystem;
   public static Lift_Subsystem lift_Subsystem;
 
+  public static boolean liftMode = false;
+  public static boolean manualControl = false;
+  public static boolean debugMode = false;
+  public static boolean debugLimelightMode = false;
+
 	public static OI oi;
 
   public static UsbCamera frontCamera;
@@ -57,8 +63,21 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   
-  Ultrasonic ultrasonic = new Ultrasonic(6,7);
-  public static double distanceIN;
+
+  Ultrasonic leftUltrasonic = new Ultrasonic(1,0); //01
+  Ultrasonic rightUltrasonic = new Ultrasonic(3,4); //34
+
+  public static double leftDistanceIN;
+  public static double rightDistanceIN;
+
+  public static double oldValue = 0;
+  public static double newValue = 0;
+  public static double goodValue = 0;
+  public static boolean checkInit = true; //move these ^^ three out of periodic and into the instantiating area
+
+
+
+  // private final SendableChooser<String> Chooser = new SendableChooser<>();
 
   /*
    * This function is run when the robot is first started up and should be
@@ -95,7 +114,8 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
-    ultrasonic.setAutomaticMode(true); // turns on automatic mode
+    rightUltrasonic.setAutomaticMode(true); // turns on automatic mode for right ultrasonic
+    leftUltrasonic.setAutomaticMode(true); // turns on automatic mode for left ultrasonic
 
   }
 
@@ -110,8 +130,39 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+
     //Ultrasonic code. Finds and outputs the distance between the sensor and the robot.
-    distanceIN = ultrasonic.getRangeInches();
+    rightDistanceIN = rightUltrasonic.getRangeInches();
+    leftDistanceIN = leftUltrasonic.getRangeInches();
+    System.out.println("Left Ultrasonic Reading:" + leftDistanceIN);
+    System.out.println();
+    // System.out.println("Right Ultrasonic Reading:" + rightDistanceIN);
+    
+    if (checkInit == true) {
+      goodValue = rightDistanceIN;
+      checkInit = false;
+    }
+
+    if (Math.abs(goodValue - rightDistanceIN) < 10 ) {
+      goodValue = rightDistanceIN;
+    }
+
+    // if (Math.abs(oldValue - rightDistanceIN) > 10 ) {
+    //   newValue = oldValue;
+    // }
+
+
+
+    
+
+     
+
+
+
+
+    // bring front wheels up at 45 inches 
+    // bring up back at 24-25
+    // stop at about 16-17
 
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
@@ -121,6 +172,8 @@ public class Robot extends TimedRobot {
     
     NetworkTableEntry tcornx = table.getEntry("tcornx");
     NetworkTableEntry tcorny = table.getEntry("tcorny");
+    
+
 
   //read values periodically
   targetX = tx.getDouble(0.0);
@@ -131,23 +184,11 @@ public class Robot extends TimedRobot {
   double cornerx[] = tcornx.getDoubleArray(defaultx);
   double defaulty[] = {0.0, 0.0, 0.0, 0.0};
   double cornery[] = tcorny.getDoubleArray(defaulty);
-
-  //post to smart dashboard periodically
-  // SmartDashboard.putNumber("LimelightX", x);
-  // SmartDashboard.putNumber("LimelightY", y);
-  // SmartDashboard.putNumber("LimelightArea", area);
-
+  
+  SmartDashboard.putNumber("LimelightX", targetX);
+  SmartDashboard.putNumber("LimelightArea", targetArea);
   SmartDashboard.putNumber("LimelightCorner0X", cornerx[0]);
   SmartDashboard.putNumber("LimelightCorner0Y", cornery[0]);
-
-  // SmartDashboard.putNumber("LimelightCorner1X", cornerx[1]);
-  // SmartDashboard.putNumber("LimelightCorner1Y", cornery[1]);
-
-  // SmartDashboard.putNumber("LimelightCorner2X", cornerx[2]);
-  // SmartDashboard.putNumber("LimelightCorner2Y", cornery[2]);
-
-  // SmartDashboard.putNumber("LimelightCorner3X", cornerx[3]);
-  // SmartDashboard.putNumber("LimelightCorner3Y", cornery[3]);
 
   // if (x >= 1.0) {
   // System.out.println(x);
@@ -158,8 +199,26 @@ public class Robot extends TimedRobot {
   // if (area >= 1.0) {
   //   System.out.println(area);
   //   }
-    System.out.println(cornerx[1]);
-    System.out.println(cornery[1]);
+    // System.out.println(cornerx[1]);
+    // System.out.println(cornery[1]);
+
+  // SmartDashboard.putString("Program Version", "V1.2");
+
+  // if (debugLimelightMode == true) {
+
+  //   SmartDashboard.putNumber("LimelightX", targetX);
+
+  //   if (centerX - targetX > 1) {
+
+    
+  //     SmartDashboard.putString("Target on:", "RIGHT");
+  //   }
+
+  //   if (centerX - targetX < 1) {
+  //     SmartDashboard.putString("Target on:", "LEFT");
+  //   }
+
+  // }
 
 
 

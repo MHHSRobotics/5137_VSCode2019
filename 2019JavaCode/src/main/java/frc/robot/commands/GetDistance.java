@@ -23,8 +23,11 @@ public class GetDistance extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double distanceIN = Robot.distanceIN;
-    System.out.println("Distance in inches:" + distanceIN);
+    double leftDistanceIN = Robot.leftDistanceIN;
+    System.out.println("Left Distance in inches:" + leftDistanceIN);
+
+    double rightDistanceIN = Robot.rightDistanceIN;
+    System.out.println("Right Distance in inches:" + rightDistanceIN);
   }
 
   // Make this return true when this Command no longer needs to run execute()

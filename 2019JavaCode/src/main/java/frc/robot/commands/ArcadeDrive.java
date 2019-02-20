@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import frc.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 /*
  * Arcade Drive is a form of driving...
@@ -9,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  * and delegates rotation to a different joystick.
  */
 public class ArcadeDrive extends Command {
-	
+
 	public ArcadeDrive() { 
 		requires(Robot.driveBase_Subsystem);
 	}

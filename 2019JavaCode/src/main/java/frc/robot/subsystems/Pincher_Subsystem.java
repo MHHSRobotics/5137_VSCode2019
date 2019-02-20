@@ -44,11 +44,11 @@ public class Pincher_Subsystem extends Subsystem {
   }
 
   public static void openPincher() {
-		pincherBitePiston.set(DoubleSolenoid.Value.kForward); //CHANGES NEEDED
+		pincherBitePiston.set(DoubleSolenoid.Value.kReverse); //CHANGES NEEDED
 	}
 	
 	public static void closePincher() {
-		pincherBitePiston.set(DoubleSolenoid.Value.kReverse); //CHANGES NEEDED
+		pincherBitePiston.set(DoubleSolenoid.Value.kForward); //CHANGES NEEDED
 	}
   
   public static void extendSlidePiston() {

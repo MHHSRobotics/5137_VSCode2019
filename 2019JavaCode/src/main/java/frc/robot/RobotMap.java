@@ -37,11 +37,14 @@ public class RobotMap {
 	public static SpeedControllerGroup thisIsJustATestIgnoreThis;
 	
 	public static void init() { //CHANGES NEEDED for everything
-		leftDriveMotor = new Spark(0); // 2017 and 2018 bot are 1
+		leftDriveMotor = new Spark(7); // 2017 and 2018 bot are 1, 2019 is 7
 		leftDriveMotor.setInverted(true);
 		
-		rightDriveMotor = new Spark(1); // 2018 bot is 2, 2017 bot is 1
+		rightDriveMotor = new Spark(9); // 2018 bot is 2, 2017 bot is 1, 2019 is 9
 		rightDriveMotor.setInverted(true);
+
+		liftMotor = new Spark(8); //that one tiny wheel on our inspector gadget bot
+		liftMotor.setInverted(true);
 		
 		hotWheels = new DifferentialDrive(leftDriveMotor, rightDriveMotor);
 		
@@ -49,7 +52,7 @@ public class RobotMap {
 		// liftMotor.setInverted(true);
 		
 		// rotateIntakeMotor = new Spark(4); 
-		// intakeMotor = new Spark(5); 
+				// intakeMotor = new Spark(5); 
 		// intakeMotor.setInverted(true);
 		
 		// leftEncoder = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
@@ -64,14 +67,16 @@ public class RobotMap {
 		// lowerLimitSwitch = new DigitalInput(8);
 
 
-		// compressor = new Compressor(0);
-		// compressor.setClosedLoopControl(true);
+		compressor = new Compressor(0);
+		compressor.setClosedLoopControl(false);
 		
-		// pincherBitePiston = new DoubleSolenoid(0, 1);
-		// pincherSlidePiston = new DoubleSolenoid(2, 3);
-		// frontLiftPiston = new DoubleSolenoid(4, 5);
-		// backLiftPiston = new DoubleSolenoid(6, 7);
-		cargoBoxPiston = new DoubleSolenoid(69, 420);
+		// first pcm is 0, second is 1
+
+		pincherBitePiston = new DoubleSolenoid(0, 0, 1);
+		pincherSlidePiston = new DoubleSolenoid(0, 2, 3);
+		frontLiftPiston = new DoubleSolenoid(0, 6, 7);
+		backLiftPiston = new DoubleSolenoid(0, 4, 5);
+		cargoBoxPiston = new DoubleSolenoid(1, 0, 1); //on pcm 1
 		
 	}
 	
