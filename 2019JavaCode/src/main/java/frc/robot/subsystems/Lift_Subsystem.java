@@ -33,24 +33,35 @@ public class Lift_Subsystem extends Subsystem {
   }
 
   public static void liftRobot() {
-    frontLiftPiston.set(DoubleSolenoid.Value.kForward);  //deploys back lift
+    frontLiftPiston.set(DoubleSolenoid.Value.kForward);  //deploys front lift
     // if (liftDelayCounter >= 5) {
-    backLiftPiston.set(DoubleSolenoid.Value.kForward);  //deploys front lift
+    backLiftPiston.set(DoubleSolenoid.Value.kForward);  //deploys back lift
     // }
     Robot.liftMode = true;
     System.out.println("Lifting Robot");
     // liftDelayCounter++;
   }
 
+  public static void liftFront() {
+    frontLiftPiston.set(DoubleSolenoid.Value.kForward);  //deploys first lift
+    // Robot.liftMode = true;
+    System.out.println("Lifting Front");
+  }
+
+  public static void liftBack() {
+    backLiftPiston.set(DoubleSolenoid.Value.kForward);  //deploys back lift
+    System.out.println("Lifting back");
+  }
+
   public static void lowerFront() {
     frontLiftPiston.set(DoubleSolenoid.Value.kReverse); //retracts front lift
-    System.out.println("Raising Front");
+    System.out.println("Retracting Front");
   }
 
   public static void lowerBack() {
     backLiftPiston.set(DoubleSolenoid.Value.kReverse); //CHANGES NEEDED
     Robot.liftMode = false;
-    System.out.println("Raising Back");
+    System.out.println("Retracting Back");
     
   }
 

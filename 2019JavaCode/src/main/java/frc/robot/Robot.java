@@ -70,12 +70,13 @@ public class Robot extends TimedRobot {
   public static double leftDistanceIN;
   public static double rightDistanceIN;
 
-  public static double oldValue = 0;
-  public static double newValue = 0;
+
   public static double goodValue = 0;
   public static boolean checkInit = true; //move these ^^ three out of periodic and into the instantiating area
 
+  public static boolean limelightLED = false;
 
+  int ultraCounter = 0;
 
   // private final SendableChooser<String> Chooser = new SendableChooser<>();
 
@@ -130,95 +131,50 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-
+    
     //Ultrasonic code. Finds and outputs the distance between the sensor and the robot.
     rightDistanceIN = rightUltrasonic.getRangeInches();
     leftDistanceIN = leftUltrasonic.getRangeInches();
-    System.out.println("Left Ultrasonic Reading:" + leftDistanceIN);
+    // System.out.println("Left Ultrasonic Reading:" + leftDistanceIN);
     System.out.println();
-    // System.out.println("Right Ultrasonic Reading:" + rightDistanceIN);
-    
-    if (checkInit == true) {
-      goodValue = rightDistanceIN;
-      checkInit = false;
-    }
 
-    if (Math.abs(goodValue - rightDistanceIN) < 10 ) {
-      goodValue = rightDistanceIN;
+    if (ultraCounter++ == 10) {
+    System.out.println("Right Ultrasonic Reading:" + rightDistanceIN);
+    ultraCounter = 0;
     }
-
-    // if (Math.abs(oldValue - rightDistanceIN) > 10 ) {
-    //   newValue = oldValue;
+    // if (checkInit == true) {
+    //   goodValue = rightDistanceIN;
+    //   checkInit = false;
     // }
 
-
-
+    // if (Math.abs(goodValue - rightDistanceIN) < 10 ) {
+    //   goodValue = rightDistanceIN;
+    // }
     
-
-     
-
-
-
-
     // bring front wheels up at 45 inches 
     // bring up back at 24-25
     // stop at about 16-17
 
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
-    NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry ta = table.getEntry("ta");
-    NetworkTableEntry ts = table.getEntry("ts");
-    
-    NetworkTableEntry tcornx = table.getEntry("tcornx");
-    NetworkTableEntry tcorny = table.getEntry("tcorny");
-    
 
+    if (limelightLED = false) {
+    table.getEntry("<ledMode>").setNumber(1); //1 is off 3 is on
+    }
+
+    if (limelightLED = true) {
+    table.getEntry("<ledMode>").setNumber(3); //1 is off 3 is on
+    }
 
   //read values periodically
   targetX = tx.getDouble(0.0);
-  targetY = ty.getDouble(0.0);
   targetArea = ta.getDouble(0.0);
-  double skew = ta.getDouble(0.0);
-  double defaultx[] = {0.0, 0.0, 0.0, 0.0};
-  double cornerx[] = tcornx.getDoubleArray(defaultx);
-  double defaulty[] = {0.0, 0.0, 0.0, 0.0};
-  double cornery[] = tcorny.getDoubleArray(defaulty);
   
-  SmartDashboard.putNumber("LimelightX", targetX);
-  SmartDashboard.putNumber("LimelightArea", targetArea);
-  SmartDashboard.putNumber("LimelightCorner0X", cornerx[0]);
-  SmartDashboard.putNumber("LimelightCorner0Y", cornery[0]);
-
-  // if (x >= 1.0) {
-  // System.out.println(x);
-  //   }
-  // if (y >= 1.0) {
-  //   System.out.println(y);
-  //   }
-  // if (area >= 1.0) {
-  //   System.out.println(area);
-  //   }
-    // System.out.println(cornerx[1]);
-    // System.out.println(cornery[1]);
-
-  // SmartDashboard.putString("Program Version", "V1.2");
-
-  // if (debugLimelightMode == true) {
-
-  //   SmartDashboard.putNumber("LimelightX", targetX);
-
-  //   if (centerX - targetX > 1) {
-
-    
-  //     SmartDashboard.putString("Target on:", "RIGHT");
-  //   }
-
-  //   if (centerX - targetX < 1) {
-  //     SmartDashboard.putString("Target on:", "LEFT");
-  //   }
-
-  // }
+  // SmartDashboard.putNumber("LimelightX", targetX);
+  // SmartDashboard.putNumber("LimelightArea", targetArea);
+  // SmartDashboard.putNumber("LimelightCorner0X", cornerx[0]);
+  // SmartDashboard.putNumber("LimelightCorner0Y", cornery[0]);
 
 
 

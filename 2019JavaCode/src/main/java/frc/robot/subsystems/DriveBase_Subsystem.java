@@ -45,33 +45,50 @@ public class DriveBase_Subsystem extends Subsystem {
 		double centerX = Robot.centerX;
 		double targetX = Robot.targetX;
 		double rightDistanceIN = Robot.rightDistanceIN;
-		double distanceToStop = 25.00;
+
+		double gearDownOne = 25.00;
+		// double gearDownTwo = 20.00;
+		// double gearDownThree = 10.00;
+		// double gearDownFour = 10.00;
+		double stopDistance = 7.00;
+
+		Robot.limelightLED = true;
         
-        if (centerX - targetX > 3 && rightDistanceIN >= distanceToStop) {
+        if (centerX - targetX > 3 && rightDistanceIN >= gearDownOne) {
 		RobotMap.hotWheels.arcadeDrive(-.3, .90);
 		// System.out.print("turning positive");
         // RobotMap.hotWheels.arcadeDrive( 0 , -turn * 0.005);
         // System.out.println("centerX = " + centerX);
         // System.out.println("turn = " + turn);
 		}
-		else if (centerX - targetX < -3 && rightDistanceIN >= distanceToStop) {
+		else if (centerX - targetX < -3 && rightDistanceIN >= gearDownOne) {
 		RobotMap.hotWheels.arcadeDrive(-.3, -.90);
 		// System.out.print("turning negative");
-		}else if (rightDistanceIN >= distanceToStop) {
+		}
+		else if (rightDistanceIN >= gearDownOne) {
 			RobotMap.hotWheels.arcadeDrive(-.7, 0);
-			// System.out.print("not turning");
+			System.out.print("gear down first");
 			}
-		else if (rightDistanceIN <= distanceToStop) {
+		// else if (rightDistanceIN >= gearDownTwo) {
+		// 	RobotMap.hotWheels.arcadeDrive(-.55, 0);
+		// 	System.out.print("gear down second");
+		// 	}
+		// else if (rightDistanceIN >= gearDownThree) {
+		// 	RobotMap.hotWheels.arcadeDrive(-.5, 0);
+		// 	System.out.print("gear down third");
+		// }
+		// else if (rightDistanceIN >= gearDownFour) {
+		// 	RobotMap.hotWheels.arcadeDrive(-.2, 0);
+		// 	System.out.print("gear down fourth");
+		// }
+		else if (rightDistanceIN <= stopDistance) {
 			RobotMap.hotWheels.arcadeDrive(0, 0);
-			// System.out.print("not turning");
+			System.out.print("stopped");
 			}
-		
-
-
     }
 	
 	public void rampArcadeDrive(Joystick jackBlack) {
-		double leftDistanceIN = Robot.leftDistanceIN;
+
 		double driveJoystick = jackBlack.getRawAxis(1); // same for 2019 & 2018
 		double turnJoystick = jackBlack.getRawAxis(4); // 0 for big ancient joystick, 4 for xbox
 		
@@ -80,7 +97,7 @@ public class DriveBase_Subsystem extends Subsystem {
 		driveSpeed = newDriveSpeed; // to print to SmartDashboard
 		previousDriveSpeed = newDriveSpeed;
 		// if (distanceIN > 6.0 || driveJoystick >= 0.1) {
-			hotWheels.arcadeDrive(newDriveSpeed/1.5, -turnJoystick); //negative turn for 2018 robot
+			hotWheels.arcadeDrive(newDriveSpeed, -turnJoystick); //negative turn for 2018 robot
 		// }
 		// System.out.println(newDriveSpeed + " " + -turnJoystick + " ");
 		
@@ -120,6 +137,7 @@ public class DriveBase_Subsystem extends Subsystem {
 	
 	public void stop() {
 		hotWheels.arcadeDrive(0, 0);
+		Robot.limelightLED = false;
 	}
 
 

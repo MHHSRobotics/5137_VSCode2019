@@ -64,8 +64,4 @@ public class ClimbSequence_CommandGroup extends CommandGroup {
 
 
   }
-
-  public void execute() {
-
-  }
 }

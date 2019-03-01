@@ -68,7 +68,7 @@ public class RobotMap {
 
 
 		compressor = new Compressor(0);
-		compressor.setClosedLoopControl(false);
+		compressor.setClosedLoopControl(true);
 		
 		// first pcm is 0, second is 1
 
