@@ -9,7 +9,7 @@ package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
-import frc.robot.commands.LiftDrive_Command;
+// import frc.robot.commands.LiftDrive_Command;
 import frc.robot.commands.LiftRobot_Command;
 import frc.robot.commands.LowerBack_Command;
 import frc.robot.commands.LowerFront_Command;
@@ -47,13 +47,13 @@ public class ClimbSequence_CommandGroup extends CommandGroup {
       }
   
 
-    while (leftDistanceIN > 70) {
-      addSequential(new LiftDrive_Command());
-      addSequential(new LiftDrive_Command()); // make a drivestraight for drivebase
-        if (leftDistanceIN < 75) {
-        addSequential(new LowerBack_Command());
-        }
-      }
+    // while (leftDistanceIN > 70) {
+    //   addSequential(new LiftDrive_Command());
+    //   addSequential(new LiftDrive_Command()); // make a drivestraight for drivebase
+    //     if (leftDistanceIN < 75) {
+    //     addSequential(new LowerBack_Command());
+    //     }
+    //   }
     
     
 
