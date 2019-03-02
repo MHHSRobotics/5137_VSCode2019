@@ -46,7 +46,7 @@ public class DriveBase_Subsystem extends Subsystem {
 		double targetX = Robot.targetX;
 		double rightDistanceIN = Robot.rightDistanceIN;
 
-		double gearDownOne = 25.00;
+		double gearDownOne = 10.00;
 		// double gearDownTwo = 20.00;
 		// double gearDownThree = 10.00;
 		// double gearDownFour = 10.00;
@@ -55,18 +55,18 @@ public class DriveBase_Subsystem extends Subsystem {
 		Robot.limelightLED = true;
         
         if (centerX - targetX > 3 && rightDistanceIN >= gearDownOne) {
-		RobotMap.hotWheels.arcadeDrive(-.3, .90);
+		RobotMap.hotWheels.arcadeDrive(-.3, .65);
 		// System.out.print("turning positive");
         // RobotMap.hotWheels.arcadeDrive( 0 , -turn * 0.005);
         // System.out.println("centerX = " + centerX);
         // System.out.println("turn = " + turn);
 		}
 		else if (centerX - targetX < -3 && rightDistanceIN >= gearDownOne) {
-		RobotMap.hotWheels.arcadeDrive(-.3, -.90);
+		RobotMap.hotWheels.arcadeDrive(-.3, -.65);
 		// System.out.print("turning negative");
 		}
 		else if (rightDistanceIN >= gearDownOne) {
-			RobotMap.hotWheels.arcadeDrive(-.7, 0);
+			RobotMap.hotWheels.arcadeDrive(-.55, 0);
 			System.out.print("gear down first");
 			}
 		// else if (rightDistanceIN >= gearDownTwo) {
@@ -96,9 +96,11 @@ public class DriveBase_Subsystem extends Subsystem {
 		newDriveSpeed = accelerate(driveJoystick, previousDriveSpeed, .4, .05);
 		driveSpeed = newDriveSpeed; // to print to SmartDashboard
 		previousDriveSpeed = newDriveSpeed;
-		// if (distanceIN > 6.0 || driveJoystick >= 0.1) {
-			hotWheels.arcadeDrive(newDriveSpeed, -turnJoystick); //negative turn for 2018 robot
-		// }
+		if (Robot.liftMode == true) {
+			hotWheels.arcadeDrive(newDriveSpeed/1.5, -turnJoystick); //negative turn for 2018 robot
+		} else {
+				hotWheels.arcadeDrive(newDriveSpeed, -turnJoystick); //negative turn for 2018 robot
+		}
 		// System.out.println(newDriveSpeed + " " + -turnJoystick + " ");
 		
 	}

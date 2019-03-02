@@ -26,6 +26,7 @@ public class FrontLift_Command extends Command {
   @Override
   protected void execute() {
     Lift_Subsystem.liftFront();
+    Robot.liftMode = true;
   }
 
   // Make this return true when this Command no longer needs to run execute()
