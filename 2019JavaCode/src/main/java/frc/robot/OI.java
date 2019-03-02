@@ -55,16 +55,16 @@ public class OI {
 		//START
 		// First Competition Controls:
 
-		bitePincherButton = new JoystickButton(jackBlack, 1); //A, 1
+		bitePincherButton = new JoystickButton(whiteKnight, 1); //A, 1
 		bitePincherButton.whenPressed(new PincherBite_Command());
 		
-		slidePincherButton = new JoystickButton(jackBlack, 4); //Y, 4
+		slidePincherButton = new JoystickButton(whiteKnight, 4); //Y, 4
 		slidePincherButton.whenPressed(new PincherSlide_Command());
 
-		cargoBoxButton = new JoystickButton(jackBlack, 8); //B, 1
+		cargoBoxButton = new JoystickButton(whiteKnight, 2); //B, 2
 		cargoBoxButton.whenPressed(new CargoBox_Command());
 
-		aimBotButton = new JoystickButton(jackBlack, 7); //A, 1
+		aimBotButton = new JoystickButton(jackBlack, 1); //A, 1
 		aimBotButton.whileHeld(new AimBot_Command());
 
 		// liftRobotButton = new JoystickButton(jackBlack, 4); //Y, 4
