@@ -66,7 +66,7 @@ public class DriveBase_Subsystem extends Subsystem {
 		// System.out.print("turning negative");
 		}
 		else if (rightDistanceIN >= gearDownOne) {
-			RobotMap.hotWheels.arcadeDrive(-.55, 0);
+			RobotMap.hotWheels.arcadeDrive(-.65, 0);
 			System.out.print("gear down first");
 			}
 		// else if (rightDistanceIN >= gearDownTwo) {
@@ -97,9 +97,9 @@ public class DriveBase_Subsystem extends Subsystem {
 		driveSpeed = newDriveSpeed; // to print to SmartDashboard
 		previousDriveSpeed = newDriveSpeed;
 		if (Robot.liftMode == true) {
-			hotWheels.arcadeDrive(newDriveSpeed/1.5, -turnJoystick); //negative turn for 2018 robot
+			hotWheels.arcadeDrive(newDriveSpeed/1.5, -turnJoystick/1.25); //negative turn for 2018 robot
 		} else {
-				hotWheels.arcadeDrive(newDriveSpeed, -turnJoystick); //negative turn for 2018 robot
+				hotWheels.arcadeDrive(newDriveSpeed, -turnJoystick/1.25); //negative turn for 2018 robot
 		}
 		// System.out.println(newDriveSpeed + " " + -turnJoystick + " ");
 		

@@ -98,9 +98,9 @@ public class Robot extends TimedRobot {
 		oi = new OI(); // gotta go after all the subsystems!
 
 
-    // frontCamera = CameraServer.getInstance().startAutomaticCapture();
-		// frontCamera.setResolution(320, 240);
-    // frontCamera.setFPS(30); 
+    frontCamera = CameraServer.getInstance().startAutomaticCapture();
+		frontCamera.setResolution(320, 240);
+    frontCamera.setFPS(30); 
     
     // leftCamera = CameraServer.getInstance().startAutomaticCapture();
 		// leftCamera.setResolution(320, 240);
@@ -176,8 +176,6 @@ public class Robot extends TimedRobot {
   // SmartDashboard.putNumber("LimelightCorner0X", cornerx[0]);
   // SmartDashboard.putNumber("LimelightCorner0Y", cornery[0]);
 
-
-
 }
   /**
    * This autonomous (along with the chooser code above) shows how to select
@@ -205,15 +203,15 @@ public class Robot extends TimedRobot {
 
     teleopPeriodic();
 
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
-    }
+    // switch (m_autoSelected) {
+    //   case kCustomAuto:
+    //     // Put custom auto code here
+    //     break;
+    //   case kDefaultAuto:
+    //   default:
+    //     // Put default auto code here
+    //     break;
+    // }
   }
 
   /**

@@ -2,6 +2,8 @@ package frc.robot;
 
 import frc.robot.commands.AimBot_Command;
 import frc.robot.commands.BackLift_Command;
+import frc.robot.commands.CargoBoxHeld_Command;
+import frc.robot.commands.CargoBoxReleased_Command;
 import frc.robot.commands.CargoBox_Command;
 import frc.robot.commands.FrontLift_Command;
 import frc.robot.commands.GetDistance;
@@ -35,6 +37,7 @@ public class OI {
 	public JoystickButton driveLiftButton;
 	public JoystickButton aimBotButton;
 	public JoystickButton cargoBoxButton;
+	public JoystickButton cargoBoxHeldButton;
 	// public JoystickButton raiseIntakeButton;
 	// public JoystickButton lowerIntakeButton;
 	// public JoystickButton intakeButton;
@@ -61,8 +64,12 @@ public class OI {
 		slidePincherButton = new JoystickButton(whiteKnight, 4); //Y, 4
 		slidePincherButton.whenPressed(new PincherSlide_Command());
 
-		cargoBoxButton = new JoystickButton(whiteKnight, 2); //B, 2
-		cargoBoxButton.whenPressed(new CargoBox_Command());
+		// cargoBoxButton = new JoystickButton(whiteKnight, 2); //B, 2
+		// cargoBoxButton.whenPressed(new CargoBox_Command());
+
+		cargoBoxHeldButton = new JoystickButton(whiteKnight, 2); //B, 2
+		cargoBoxHeldButton.whileHeld(new CargoBoxHeld_Command());
+		cargoBoxHeldButton.whenReleased(new CargoBoxReleased_Command());
 
 		aimBotButton = new JoystickButton(jackBlack, 1); //A, 1
 		aimBotButton.whileHeld(new AimBot_Command());

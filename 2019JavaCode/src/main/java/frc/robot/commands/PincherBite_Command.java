@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.Pincher_Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -31,11 +32,12 @@ public class PincherBite_Command extends Command {
     if (Pincher_Subsystem.getBitePincherStatus() != DoubleSolenoid.Value.kForward) { //CHANGES NEEDED
       Pincher_Subsystem.closePincher();
       System.out.println("closing pincher");
-
+      SmartDashboard.putString("Pincher Status:", "CLOSED CLOSED CLOSED");
     }
     else {
       Pincher_Subsystem.openPincher();
       System.out.println("opening pincher");
+      SmartDashboard.putString("Pincher Status:", "OPEN OPEN OPEN");
     }
     System.out.println(Pincher_Subsystem.getBitePincherStatus());
     System.out.println();

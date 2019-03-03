@@ -26,6 +26,7 @@ public class LowerBack_Command extends Command {
   @Override
   protected void execute() {
     Lift_Subsystem.lowerBack();
+    Robot.liftMode = false;
   }
 
   // Make this return true when this Command no longer needs to run execute()
