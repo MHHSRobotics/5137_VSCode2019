@@ -56,37 +56,20 @@ public class DriveBase_Subsystem extends Subsystem {
         
         if (centerX - targetX > 3 && rightDistanceIN >= gearDownOne) {
 		RobotMap.hotWheels.arcadeDrive(-.3, .65);
-		// System.out.print("turning positive");
-        // RobotMap.hotWheels.arcadeDrive( 0 , -turn * 0.005);
-        // System.out.println("centerX = " + centerX);
-        // System.out.println("turn = " + turn);
 		}
 		else if (centerX - targetX < -3 && rightDistanceIN >= gearDownOne) {
 		RobotMap.hotWheels.arcadeDrive(-.3, -.65);
-		// System.out.print("turning negative");
 		}
 		else if (rightDistanceIN >= gearDownOne) {
 			RobotMap.hotWheels.arcadeDrive(-.65, 0);
 			System.out.print("gear down first");
 			}
-		// else if (rightDistanceIN >= gearDownTwo) {
-		// 	RobotMap.hotWheels.arcadeDrive(-.55, 0);
-		// 	System.out.print("gear down second");
-		// 	}
-		// else if (rightDistanceIN >= gearDownThree) {
-		// 	RobotMap.hotWheels.arcadeDrive(-.5, 0);
-		// 	System.out.print("gear down third");
-		// }
-		// else if (rightDistanceIN >= gearDownFour) {
-		// 	RobotMap.hotWheels.arcadeDrive(-.2, 0);
-		// 	System.out.print("gear down fourth");
-		// }
 		else if (rightDistanceIN <= stopDistance) {
 			RobotMap.hotWheels.arcadeDrive(0, 0);
 			System.out.print("stopped");
 			}
     }
-	
+
 	public void rampArcadeDrive(Joystick jackBlack) {
 
 		double driveJoystick = jackBlack.getRawAxis(1); // same for 2019 & 2018
@@ -97,9 +80,9 @@ public class DriveBase_Subsystem extends Subsystem {
 		driveSpeed = newDriveSpeed; // to print to SmartDashboard
 		previousDriveSpeed = newDriveSpeed;
 		if (Robot.liftMode == true) {
-			hotWheels.arcadeDrive(newDriveSpeed/1.5, -turnJoystick/1.25); //negative turn for 2018 robot
+			hotWheels.arcadeDrive(newDriveSpeed/1.5, -turnJoystick/1.3); //negative turn for 2018 robot
 		} else {
-				hotWheels.arcadeDrive(newDriveSpeed, -turnJoystick/1.25); //negative turn for 2018 robot
+				hotWheels.arcadeDrive(newDriveSpeed, -turnJoystick/1.3); //negative turn for 2018 robot
 		}
 		// System.out.println(newDriveSpeed + " " + -turnJoystick + " ");
 		
