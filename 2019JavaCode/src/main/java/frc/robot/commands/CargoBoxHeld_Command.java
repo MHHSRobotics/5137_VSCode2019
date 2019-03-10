@@ -9,13 +9,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.Lift_Subsystem;
+import frc.robot.subsystems.CargoBox_Subsystem;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
-public class LiftRobot_Command extends Command {
-  int counter = 0;
-  public LiftRobot_Command() {
-    requires(Robot.lift_Subsystem);
+public class CargoBoxHeld_Command extends Command {
+  public CargoBoxHeld_Command() {
+    requires(Robot.cargoBox_Subsystem);
   }
+
 
   // Called just before this Command runs the first time
   @Override
@@ -25,27 +26,24 @@ public class LiftRobot_Command extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // counter++;
-    // if (counter <= 60)
-    Lift_Subsystem.liftRobot();
+      CargoBox_Subsystem.openBox();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Lift_Subsystem.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
+  
 }

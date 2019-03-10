@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Lift_Subsystem;
 
-public class LiftRobot_Command extends Command {
+public class FrontLift_Command extends Command {
   int counter = 0;
-  public LiftRobot_Command() {
+  public FrontLift_Command() {
     requires(Robot.lift_Subsystem);
   }
 
@@ -25,9 +25,8 @@ public class LiftRobot_Command extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // counter++;
-    // if (counter <= 60)
-    Lift_Subsystem.liftRobot();
+    Lift_Subsystem.liftFront();
+    Robot.liftMode = true;
   }
 
   // Make this return true when this Command no longer needs to run execute()

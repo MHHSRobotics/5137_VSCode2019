@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Lift_Subsystem;
 
+
 public class LowerBack_Command extends Command {
   public LowerBack_Command() {
     requires(Robot.lift_Subsystem);
@@ -25,6 +26,7 @@ public class LowerBack_Command extends Command {
   @Override
   protected void execute() {
     Lift_Subsystem.lowerBack();
+    Robot.liftMode = false;
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -36,11 +38,13 @@ public class LowerBack_Command extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Lift_Subsystem.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

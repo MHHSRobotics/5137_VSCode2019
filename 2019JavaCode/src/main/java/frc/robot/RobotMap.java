@@ -63,43 +63,46 @@ public class RobotMap { /*RobotMap is a class that's set aside to create all the
 		a positive value, the motor will spin in the negative direction (counterclockwise), and vice
 		versa. If we don't call this method, it defaults to false.*/
 		
-		rightDriveMotor = new Spark(1); // 2018 bot is 2, 2017 bot is 1
+		rightDriveMotor = new Spark(9); // 2018 bot is 2, 2017 bot is 1, 2019 is 9
 		rightDriveMotor.setInverted(true);
+
+		liftMotor = new Spark(8); //that one tiny wheel on our inspector gadget bot
+		liftMotor.setInverted(true);
 		
 		hotWheels = new DifferentialDrive(leftDriveMotor, rightDriveMotor); /*The Differential Drive
 		we see here uses two motors we've instantiated and links them together to form a Differential
 		Drive. You can look into the specifics as to what a Differential Drive is by searching for it on
 		FRC's website.*/
 		
-		liftMotor = new Spark(3);
-		liftMotor.setInverted(true);
+		// liftMotor = new Spark(3);
+		// liftMotor.setInverted(true);
 		
-		rotateIntakeMotor = new Spark(4); 
-		intakeMotor = new Spark(5); 
-		intakeMotor.setInverted(true);
+		// rotateIntakeMotor = new Spark(4); 
+				// intakeMotor = new Spark(5); 
+		// intakeMotor.setInverted(true);
 		
 		/*Encoders measure the distance a wheel has traveled based on the number of revolutions it has
 		made. The specifics of the encoders should be examined by searching on FRC's website. Also
 		remember that you can mouse over the method to see what the parameters mean!*/
-		leftEncoder = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
-		leftEncoder.setDistancePerPulse(.1173); 
-		leftEncoder.setMinRate(10);
 		
-		rightEncoder = new Encoder(4, 5, false, Encoder.EncodingType.k4X);
-		rightEncoder.setDistancePerPulse(.1173);
-		rightEncoder.setMinRate(10);
+		// rightEncoder = new Encoder(4, 5, false, Encoder.EncodingType.k4X);
+		// rightEncoder.setDistancePerPulse(.1173);
+		// rightEncoder.setMinRate(10);
 		
-		upperLimitSwitch = new DigitalInput(9);
-		lowerLimitSwitch = new DigitalInput(8);
+		// upperLimitSwitch = new DigitalInput(9);
+		// lowerLimitSwitch = new DigitalInput(8);
+
 
 		compressor = new Compressor(0);
 		compressor.setClosedLoopControl(true);
 		
-		pincherBitePiston = new DoubleSolenoid(0,0,1);
-		pincherSlidePiston = new DoubleSolenoid(0,2,3);
-		frontLiftPiston = new DoubleSolenoid(0,4,5);
-		backLiftPiston = new DoubleSolenoid(0,6,7);
-		cargoBoxPiston = new DoubleSolenoid(1,0,1);
+		// first pcm is 0, second is 1
+
+		pincherBitePiston = new DoubleSolenoid(0, 0, 1);
+		pincherSlidePiston = new DoubleSolenoid(0, 2, 3);
+		frontLiftPiston = new DoubleSolenoid(0, 6, 7);
+		backLiftPiston = new DoubleSolenoid(0, 4, 5);
+		cargoBoxPiston = new DoubleSolenoid(1, 0, 1); //on pcm 1
 		
 	} /*After RobotMap.init() is finished running, the code goes back to Robot.java and continues on.
 	Head back to Robot.java to see what happens next.*/

@@ -15,6 +15,10 @@ for Robotics) but they are also necessary if the code refers to other classes in
 
 package frc.robot;
 
+
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.IterativeRobotBase;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.TimedRobot; /*Let's use this import as an example. This Robot.java class
 is a subclass of TimedRobot, which means it has the properties of a TimedRobot class. (There are other
 types of robot code such as Basic or Iterative, don't worry too much about them.) Since the code refers
@@ -32,6 +36,7 @@ import frc.robot.subsystems.Lift_Subsystem;
 import frc.robot.subsystems.Pincher_Subsystem;
 
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -50,6 +55,10 @@ public class Robot extends TimedRobot { /*After all the imports, we get to the a
   public static CargoBox_Subsystem cargoBox_Subsystem;
   public static Lift_Subsystem lift_Subsystem;
 
+  public static boolean liftMode = false;
+  public static boolean manualControl = false;
+
+	public static OI oi;
   public static OI oi; /*The OI must be created after all other subsystems. It's something to do with
   the way FRC's code works and how it changes as it does certain things.*/
 
@@ -58,7 +67,11 @@ public class Robot extends TimedRobot { /*After all the imports, we get to the a
   public static UsbCamera leftCamera;
   public static UsbCamera rightCamera;
 
-  //CHANGES NEEDED
+  public static double centerX = 0.0;
+  public static double targetX;
+  public static double targetY;
+  public static double targetArea;
+
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
@@ -71,6 +84,27 @@ public class Robot extends TimedRobot { /*After all the imports, we get to the a
   public static Ultrasonic ultrasonic2;
   public static double distanceIN1;
   public static double distanceIN2;
+
+  Ultrasonic leftUltrasonic = new Ultrasonic(1,0); //01
+  Ultrasonic rightUltrasonic = new Ultrasonic(3,4); //34
+
+  public static double leftDistanceIN;
+  public static double rightDistanceIN;
+
+
+  public static double goodValue = 0;
+  public static boolean checkInit = true; //move these ^^ three out of periodic and into the instantiating area
+
+  public static boolean limelightLED = false;
+
+  int ultraCounter = 0;
+
+  // private final SendableChooser<String> Chooser = new SendableChooser<>();
+
+  /*
+   * This function is run when the robot is first started up and should be
+   * used for any initialization code.
+   */
 
   @Override
   public void robotInit() { /*robotInit() is a method. Methods are the "what it does" part of a robot--
@@ -87,12 +121,13 @@ public class Robot extends TimedRobot { /*After all the imports, we get to the a
 	  pincher_Subsystem = new Pincher_Subsystem();
     cargoBox_Subsystem = new CargoBox_Subsystem();
     lift_Subsystem = new Lift_Subsystem();
+    
 		oi = new OI(); // gotta go after all the subsystems!
 
 
-    // frontCamera = CameraServer.getInstance().startAutomaticCapture();
-		// frontCamera.setResolution(320, 240);
-    // frontCamera.setFPS(30); 
+    frontCamera = CameraServer.getInstance().startAutomaticCapture();
+		frontCamera.setResolution(320, 240);
+    frontCamera.setFPS(30); 
     
     // leftCamera = CameraServer.getInstance().startAutomaticCapture();
 		// leftCamera.setResolution(320, 240);
@@ -107,11 +142,8 @@ public class Robot extends TimedRobot { /*After all the imports, we get to the a
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
-    ultrasonic1 = new Ultrasonic(6,7);
-    ultrasonic1.setAutomaticMode(true); /*Turns on automatic mode. I don't really know what it is; all
-    I do know is that it's far better than doing it manually.*/
-    ultrasonic2 = new Ultrasonic(8,9); //CHANGES NEEDED
-    ultrasonic2.setAutomaticMode(true);
+    rightUltrasonic.setAutomaticMode(true); // turns on automatic mode for right ultrasonic
+    leftUltrasonic.setAutomaticMode(true); // turns on automatic mode for left ultrasonic
 
   }
 
@@ -132,19 +164,42 @@ public class Robot extends TimedRobot { /*After all the imports, we get to the a
     left, the one that looks like a steering wheel. This tab allows you to change the mode of your robot
     to Tele-Op, Autonomous, etc.*/
     
-    distanceIN1 = ultrasonic1.getRangeInches();
-    distanceIN2 = ultrasonic2.getRangeInches();
+    //Ultrasonic code. Finds and outputs the distance between the sensor and the robot.
+    rightDistanceIN = rightUltrasonic.getRangeInches();
+    leftDistanceIN = leftUltrasonic.getRangeInches();
+    // System.out.println("Left Ultrasonic Reading:" + leftDistanceIN);
+    System.out.println();
 
-    /*CHANGES NEEDED for explanation of all camera things*/
+    if (ultraCounter++ == 10) {
+    System.out.println("Right Ultrasonic Reading:" + rightDistanceIN);
+    ultraCounter = 0;
+    }
+    // if (checkInit == true) {
+    //   goodValue = rightDistanceIN;
+    //   checkInit = false;
+    // }
+
+    // if (Math.abs(goodValue - rightDistanceIN) < 10 ) {
+    //   goodValue = rightDistanceIN;
+    // }
+    
+    // bring front wheels up at 45 inches 
+    // bring up back at 24-25
+    // stop at about 16-17
+
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
-    NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry ta = table.getEntry("ta");
 
-    double x = tx.getDouble(0.0);
-    double y = ty.getDouble(0.0);
-    double area = ta.getDouble(0.0);
+    // if (limelightLED = false) {
+    // System.out.print("LED off");
+    // table.getEntry("ledMode").setNumber(1); //1 is off 3 is on
+    // }
 
+    // if (limelightLED = true) {
+    // System.out.print("LED on");
+    // table.getEntry("ledMode").setNumber(3); //1 is off 3 is on
+    // }
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
@@ -159,6 +214,14 @@ public class Robot extends TimedRobot { /*After all the imports, we get to the a
       System.out.println(area);
     }
 
+  //read values periodically
+  targetX = tx.getDouble(0.0);
+  targetArea = ta.getDouble(0.0);
+  
+  // SmartDashboard.putNumber("LimelightX", targetX);
+  // SmartDashboard.putNumber("LimelightArea", targetArea);
+  // SmartDashboard.putNumber("LimelightCorner0X", cornerx[0]);
+  // SmartDashboard.putNumber("LimelightCorner0Y", cornery[0]);
 
   }
   
@@ -179,15 +242,18 @@ public class Robot extends TimedRobot { /*After all the imports, we get to the a
     ferent preset options for the autonomous code. As I said earlier, we didn't do anything with auto-
     nomous, so you may want to look into FRC's website for further clarification.*/
 
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
-    }
+
+    teleopPeriodic();
+
+    // switch (m_autoSelected) {
+    //   case kCustomAuto:
+    //     // Put custom auto code here
+    //     break;
+    //   case kDefaultAuto:
+    //   default:
+    //     // Put default auto code here
+    //     break;
+    // }
   }
 
   /*This method is called periodically during Tele-Op mode. Tele-Op is the mode in which you actually

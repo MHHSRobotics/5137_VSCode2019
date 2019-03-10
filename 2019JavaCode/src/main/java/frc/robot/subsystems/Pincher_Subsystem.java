@@ -55,11 +55,11 @@ public class Pincher_Subsystem extends Subsystem { /*Subsystems organize the rob
   /*The following two methods change the state of the pneumatic piston to either the open or closed
   state. The two methods afterwards do the same thing, except using a different piston.*/
   public static void openPincher() {
-		pincherBitePiston.set(DoubleSolenoid.Value.kForward); //CHANGES NEEDED
+		pincherBitePiston.set(DoubleSolenoid.Value.kReverse); //CHANGES NEEDED
 	}
 	
 	public static void closePincher() {
-		pincherBitePiston.set(DoubleSolenoid.Value.kReverse); //CHANGES NEEDED
+		pincherBitePiston.set(DoubleSolenoid.Value.kForward); //CHANGES NEEDED
 	}
   
   public static void extendSlidePiston() {

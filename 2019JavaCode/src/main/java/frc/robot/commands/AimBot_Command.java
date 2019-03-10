@@ -9,12 +9,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.Lift_Subsystem;
 
-public class LiftRobot_Command extends Command {
-  int counter = 0;
-  public LiftRobot_Command() {
-    requires(Robot.lift_Subsystem);
+public class AimBot_Command extends Command {
+  public AimBot_Command() {
+    requires(Robot.driveBase_Subsystem);
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
@@ -25,9 +25,7 @@ public class LiftRobot_Command extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // counter++;
-    // if (counter <= 60)
-    Lift_Subsystem.liftRobot();
+    Robot.driveBase_Subsystem.VisionDrive();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -39,7 +37,7 @@ public class LiftRobot_Command extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Lift_Subsystem.stop();
+    Robot.driveBase_Subsystem.stop();
   }
 
   // Called when another command which requires one or more of the same

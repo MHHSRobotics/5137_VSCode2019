@@ -1,11 +1,10 @@
 package frc.robot.commands;
 
 import frc.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ArcadeDrive extends Command {
-	
+
 	public ArcadeDrive() { 
 		requires(Robot.driveBase_Subsystem);
 	}

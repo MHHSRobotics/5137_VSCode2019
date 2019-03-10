@@ -27,15 +27,15 @@ public class CargoBox_Subsystem extends Subsystem {
   }
 
   public static void openBox() {
-    cargoBoxPiston.set(Value.kForward);
+    cargoBoxPiston.set(DoubleSolenoid.Value.kForward);
   }
 
   public static void closeBox() {
-    cargoBoxPiston.set(Value.kReverse);
+    cargoBoxPiston.set(DoubleSolenoid.Value.kReverse);
   }
 
   public static void stop() {
-    cargoBoxPiston.set(Value.kOff);
+    cargoBoxPiston.set(DoubleSolenoid.Value.kOff);
   }
   
 }

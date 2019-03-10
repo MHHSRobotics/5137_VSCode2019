@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.Pincher_Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -29,13 +30,15 @@ public class PincherSlide_Command extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Pincher_Subsystem.getSlidePincherStatus() != DoubleSolenoid.Value.kReverse) { //CHANGES NEEDED
-      System.out.println("Trying to close");
-      Pincher_Subsystem.closePincher();
+    if (Pincher_Subsystem.getSlidePincherStatus() != DoubleSolenoid.Value.kForward) { //CHANGES NEEDED
+      System.out.println("extending");
+      Pincher_Subsystem.extendSlidePiston();
+      SmartDashboard.putString("SLIDEPincher Status:", "IN IN IN RETRACTED!!!!");
     }
     else {
-      System.out.println("Trying to open");
-      Pincher_Subsystem.openPincher();
+      System.out.println("retracting");
+      Pincher_Subsystem.retractSlidePiston();
+      SmartDashboard.putString("SLIDEPincher Status:", "OUT OUT OUT EXTENDED!!!!");
     }
     isFinished = true;
   }

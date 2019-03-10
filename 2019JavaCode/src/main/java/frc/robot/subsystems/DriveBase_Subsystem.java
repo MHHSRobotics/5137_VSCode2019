@@ -62,12 +62,48 @@ public class DriveBase_Subsystem extends Subsystem { /*Welcome to the DriveBase 
 	/*Here's the method that ArcadeDrive calls. As you can see, the method establishes a parameter
 	with the properties of a Joystick, so we were right about our prediction that the parameter
 	selects the joystick we want to use. Right then, so what's going on?*/
+	/* 
+	 * Arcade Drive is a form of driving...
+	 * That allows one joystick on a controller to control both forwards/backwards and left and right (via SlideDrive)
+	 * and delegates rotation to a different joystick
+	 */
+	public void VisionDrive() {
+    
+		double centerX = Robot.centerX;
+		double targetX = Robot.targetX;
+		double rightDistanceIN = Robot.rightDistanceIN;
+
+		double gearDownOne = 10.00;
+		// double gearDownTwo = 20.00;
+		// double gearDownThree = 10.00;
+		// double gearDownFour = 10.00;
+		double stopDistance = 7.00;
+
+		Robot.limelightLED = true;
+        
+        if (centerX - targetX > 3 && rightDistanceIN >= gearDownOne) {
+		RobotMap.hotWheels.arcadeDrive(-.3, .65);
+		}
+		else if (centerX - targetX < -3 && rightDistanceIN >= gearDownOne) {
+		RobotMap.hotWheels.arcadeDrive(-.3, -.65);
+		}
+		else if (rightDistanceIN >= gearDownOne) {
+			RobotMap.hotWheels.arcadeDrive(-.65, 0);
+			System.out.print("gear down first");
+			}
+		else if (rightDistanceIN <= stopDistance) {
+			RobotMap.hotWheels.arcadeDrive(0, 0);
+			System.out.print("stopped");
+			}
+    }
+
 	public void rampArcadeDrive(Joystick jackBlack) {
+
+		double driveJoystick = jackBlack.getRawAxis(1); // same for 2019 & 2018
+		double turnJoystick = jackBlack.getRawAxis(4); // 0 for big ancient joystick, 4 for xbox
 		/*Our first course of action is to get the values of the analog sticks from the controller.
 		Our second course of action is to use the distance variables from the Ultrasonic code we
 		created all the way back in Robot.java (revisit it if you like).*/
-		double driveJoystick = jackBlack.getRawAxis(1);
-		double turnJoystick = jackBlack.getRawAxis(4);
 		double distanceIN1 = Robot.distanceIN1;
 		double distanceIN2 = Robot.distanceIN2;
 		
@@ -78,9 +114,12 @@ public class DriveBase_Subsystem extends Subsystem { /*Welcome to the DriveBase 
 		newDriveSpeed = accelerate(driveJoystick, previousDriveSpeed, .4, .05);
 		driveSpeed = newDriveSpeed; // to print to SmartDashboard
 		previousDriveSpeed = newDriveSpeed;
-		if (distanceIN1 > 6.0 || driveJoystick >= 0.1) {
-			hotWheels.arcadeDrive(newDriveSpeed, -turnJoystick);
+		if (Robot.liftMode == true) {
+			hotWheels.arcadeDrive(newDriveSpeed/1.5, -turnJoystick/1.3); //negative turn for 2018 robot
+		} else {
+				hotWheels.arcadeDrive(newDriveSpeed, -turnJoystick/1.3); //negative turn for 2018 robot
 		}
+		// System.out.println(newDriveSpeed + " " + -turnJoystick + " ");
 		
 	}
 
@@ -119,6 +158,7 @@ public class DriveBase_Subsystem extends Subsystem { /*Welcome to the DriveBase 
 	
 	public void stop() {
 		hotWheels.arcadeDrive(0, 0);
+		Robot.limelightLED = false;
 	}
 
 

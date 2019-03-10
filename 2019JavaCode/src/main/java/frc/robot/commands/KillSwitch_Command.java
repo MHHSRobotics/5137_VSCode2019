@@ -8,13 +8,21 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.Robot;
-import frc.robot.subsystems.Lift_Subsystem;
+import frc.robot.subsystems.CargoBox_Subsystem;
+import frc.robot.subsystems.Pincher_Subsystem;
 
-public class LiftRobot_Command extends Command {
-  int counter = 0;
-  public LiftRobot_Command() {
+public class KillSwitch_Command extends Command {
+  public KillSwitch_Command() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    Scheduler.getInstance().removeAll();
+
+    requires(Robot.cargoBox_Subsystem);
+    requires(Robot.driveBase_Subsystem);
     requires(Robot.lift_Subsystem);
+    requires(Robot.pincher_Subsystem);
   }
 
   // Called just before this Command runs the first time
@@ -25,21 +33,21 @@ public class LiftRobot_Command extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // counter++;
-    // if (counter <= 60)
-    Lift_Subsystem.liftRobot();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Lift_Subsystem.stop();
+    Robot.pincher_Subsystem.stop();
+    Robot.driveBase_Subsystem.stop();
+    Robot.cargoBox_Subsystem.stop();
+    Robot.pincher_Subsystem.stop();
   }
 
   // Called when another command which requires one or more of the same

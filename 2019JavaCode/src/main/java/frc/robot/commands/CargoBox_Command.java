@@ -28,10 +28,12 @@ public class CargoBox_Command extends Command {
   @Override
   protected void execute() {
     if (CargoBox_Subsystem.getBoxStatus() != DoubleSolenoid.Value.kReverse) { //CHANGES NEEDED
-      CargoBox_Subsystem.openBox();
+      CargoBox_Subsystem.closeBox();
+      System.out.println("closing box");
     }
     else {
-      CargoBox_Subsystem.closeBox();
+      CargoBox_Subsystem.openBox();
+      System.out.println("opening box");
     }
     isFinished = true;
   }
@@ -51,7 +53,6 @@ public class CargoBox_Command extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
   
 }

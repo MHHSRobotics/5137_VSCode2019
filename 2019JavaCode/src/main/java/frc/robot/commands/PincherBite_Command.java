@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.Pincher_Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -33,19 +34,26 @@ public class PincherBite_Command extends Command {
   happens.*/
   @Override
   protected void execute() {
+    System.out.println(Pincher_Subsystem.getBitePincherStatus());
+    if (Pincher_Subsystem.getBitePincherStatus() != DoubleSolenoid.Value.kForward) { //CHANGES NEEDED
     /*We start with an if statement, which uses the value of the piston to see whether it's in the
     off, open, or closed position. The code calls the getBitePincherStatus() method in the pincher sub-
     system, then tests to see if the value is NOT kReverse (!= means not equal to). If the value is
     NOT kReverse, the piston either hasn't been used yet or it is in the open position, so we want to
     close the pincher.*/
-    if (Pincher_Subsystem.getBitePincherStatus() != DoubleSolenoid.Value.kReverse) { //CHANGES NEEDED
       Pincher_Subsystem.closePincher();
+      System.out.println("closing pincher");
+      SmartDashboard.putString("Pincher Status:", "CLOSED CLOSED CLOSED");
     }
     /*If getBitePincherStatus() does return kReverse, it means the piston is in the closed position.
     This means we want to open it instead.*/
     else {
       Pincher_Subsystem.openPincher();
+      System.out.println("opening pincher");
+      SmartDashboard.putString("Pincher Status:", "OPEN OPEN OPEN");
     }
+    System.out.println(Pincher_Subsystem.getBitePincherStatus());
+    System.out.println();
     /*After the command is executed, we set a variable "isFinished" to true.*/
     isFinished = true;
   }
@@ -79,7 +87,6 @@ public class PincherBite_Command extends Command {
   lower itself at the same time, would you? That would make no sense.*/
   @Override
   protected void interrupted() {
-    end();
   }
 } /*You're making great progress with the robot code. All the other subsystems and commands are pretty
 much the same, so we won't look at them--except for one more. The DriveBase_Subsystem works in generally

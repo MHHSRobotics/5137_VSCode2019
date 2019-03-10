@@ -11,11 +11,18 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Lift_Subsystem;
 
-public class LiftRobot_Command extends Command {
-  int counter = 0;
-  public LiftRobot_Command() {
+public class LiftDrive_Command extends Command {
+  // double frontLiftDistance = 0;
+  // double distanceIN = Robot.distanceIN;
+  // boolean isFinished = false;
+  public LiftDrive_Command() {
     requires(Robot.lift_Subsystem);
   }
+
+  // public LiftDrive_Command(double distance) {
+  //   requires(Robot.lift_Subsystem);
+  //   frontLiftDistance = distance;
+  // }
 
   // Called just before this Command runs the first time
   @Override
@@ -25,9 +32,14 @@ public class LiftRobot_Command extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // counter++;
-    // if (counter <= 60)
-    Lift_Subsystem.liftRobot();
+    // if (distanceIN >= frontLiftDistance)
+    // {
+      Lift_Subsystem.driveLift();
+    // }
+    // else {
+    //   isFinished = true;
+    // }
+  
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -46,6 +58,6 @@ public class LiftRobot_Command extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
+    Lift_Subsystem.stop();
   }
 }
