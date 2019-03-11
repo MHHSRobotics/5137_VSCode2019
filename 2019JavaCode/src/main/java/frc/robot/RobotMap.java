@@ -52,7 +52,7 @@ public class RobotMap {
 		// liftMotor.setInverted(true);
 		
 		// rotateIntakeMotor = new Spark(4); 
-				// intakeMotor = new Spark(5); 
+		// intakeMotor = new Spark(5); 
 		// intakeMotor.setInverted(true);
 		
 		// leftEncoder = new Encoder(0, 1, true, Encoder.EncodingType.k4X);

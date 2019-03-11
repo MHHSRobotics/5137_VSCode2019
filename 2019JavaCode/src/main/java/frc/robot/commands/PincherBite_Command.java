@@ -9,9 +9,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.subsystems.Pincher_Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 public class PincherBite_Command extends Command {
   public PincherBite_Command() {
@@ -33,11 +35,16 @@ public class PincherBite_Command extends Command {
       Pincher_Subsystem.closePincher();
       System.out.println("closing pincher");
       SmartDashboard.putString("Pincher Status:", "CLOSED CLOSED CLOSED");
+      OI.jackBlack.setRumble(RumbleType.kLeftRumble, 1.0); //1.0 is rumble, 0.0 is off
+		  OI.jackBlack.setRumble(RumbleType.kRightRumble, 1.0);
+
     }
     else {
       Pincher_Subsystem.openPincher();
       System.out.println("opening pincher");
       SmartDashboard.putString("Pincher Status:", "OPEN OPEN OPEN");
+      OI.jackBlack.setRumble(RumbleType.kLeftRumble, 1.0); //1.0 is rumble, 0.0 is off
+		  OI.jackBlack.setRumble(RumbleType.kRightRumble, 1.0);
     }
     System.out.println(Pincher_Subsystem.getBitePincherStatus());
     System.out.println();
@@ -54,11 +61,15 @@ public class PincherBite_Command extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    OI.jackBlack.setRumble(RumbleType.kLeftRumble, 0.0); //1.0 is rumble, 0.0 is off
+    OI.jackBlack.setRumble(RumbleType.kRightRumble, 0.0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    OI.jackBlack.setRumble(RumbleType.kLeftRumble, 0.0); //1.0 is rumble, 0.0 is off
+    OI.jackBlack.setRumble(RumbleType.kRightRumble, 0.0);
   }
 }

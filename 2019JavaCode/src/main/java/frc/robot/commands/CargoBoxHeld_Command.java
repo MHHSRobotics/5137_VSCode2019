@@ -8,9 +8,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.subsystems.CargoBox_Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 public class CargoBoxHeld_Command extends Command {
   public CargoBoxHeld_Command() {
@@ -27,6 +29,8 @@ public class CargoBoxHeld_Command extends Command {
   @Override
   protected void execute() {
       CargoBox_Subsystem.openBox();
+      OI.jackBlack.setRumble(RumbleType.kLeftRumble, 1.0); //1.0 is rumble, 0.0 is off
+		  OI.jackBlack.setRumble(RumbleType.kRightRumble, 1.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()

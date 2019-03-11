@@ -9,9 +9,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.subsystems.Pincher_Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 public class PincherSlide_Command extends Command {
   public PincherSlide_Command() {
@@ -34,11 +36,15 @@ public class PincherSlide_Command extends Command {
       System.out.println("extending");
       Pincher_Subsystem.extendSlidePiston();
       SmartDashboard.putString("SLIDEPincher Status:", "IN IN IN RETRACTED!!!!");
+      OI.jackBlack.setRumble(RumbleType.kLeftRumble, 1.0); //1.0 is rumble, 0.0 is off
+		  OI.jackBlack.setRumble(RumbleType.kRightRumble, 1.0);
     }
     else {
       System.out.println("retracting");
       Pincher_Subsystem.retractSlidePiston();
       SmartDashboard.putString("SLIDEPincher Status:", "OUT OUT OUT EXTENDED!!!!");
+      OI.jackBlack.setRumble(RumbleType.kLeftRumble, 1.0); //1.0 is rumble, 0.0 is off
+		  OI.jackBlack.setRumble(RumbleType.kRightRumble, 1.0);
     }
     isFinished = true;
   }
@@ -52,6 +58,8 @@ public class PincherSlide_Command extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    OI.jackBlack.setRumble(RumbleType.kLeftRumble, 0.0); //1.0 is rumble, 0.0 is off
+    OI.jackBlack.setRumble(RumbleType.kRightRumble, 0.0);
   }
 
   // Called when another command which requires one or more of the same
@@ -59,5 +67,7 @@ public class PincherSlide_Command extends Command {
   @Override
   protected void interrupted() {
     Robot.pincher_Subsystem.stop();
+    OI.jackBlack.setRumble(RumbleType.kLeftRumble, 0.0); //1.0 is rumble, 0.0 is off
+    OI.jackBlack.setRumble(RumbleType.kRightRumble, 0.0);
   }
 }

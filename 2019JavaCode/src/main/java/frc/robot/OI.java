@@ -14,7 +14,10 @@ import frc.robot.commands.LowerBack_Command;
 import frc.robot.commands.LowerFront_Command;
 import frc.robot.commands.PincherBite_Command;
 import frc.robot.commands.PincherSlide_Command;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /*
@@ -23,8 +26,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
 	
 	// I don't think these have to be public but I know it works.
-	public Joystick jackBlack;
-	public Joystick whiteKnight;
+	public static Joystick jackBlack;
+	public static Joystick whiteKnight;
 
 	public JoystickButton getDistanceButton;
 	public JoystickButton bitePincherButton;
@@ -50,7 +53,9 @@ public class OI {
 		jackBlack = new Joystick(0);
 		whiteKnight = new Joystick(1);
 
-		
+		// jackBlack.setRumble(RumbleType.kLeftRumble, 1.0); //1.0 is rumble, 0.0 is off
+		// jackBlack.setRumble(RumbleType.kRightRumble, 1.0);
+
 		//The code below is for two XBox controllers. Add a /* at the beginning
 		//and */ at the end to deactivate this code, and remove them to activate.
 		//Drive Base and Lift are port 0; everything else is port 1.
@@ -88,6 +93,8 @@ public class OI {
 		
 		lowerBackButton = new JoystickButton(jackBlack, 2); //B, 2
 		lowerBackButton.whileHeld(new LowerBack_Command());
+
+		// SINGLE DRIVER CONROLS---------------------------------------
 
 		// liftRobotButton = new JoystickButton(jackBlack, 4); //Y, 0 4
 		// liftRobotButton.whileHeld(new LiftRobot_Command());
