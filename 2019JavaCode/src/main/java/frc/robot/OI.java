@@ -18,7 +18,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.POVButton;
 
 /*
  * Everything to do with the controller and its buttons.
@@ -41,6 +43,12 @@ public class OI {
 	public JoystickButton aimBotButton;
 	public JoystickButton cargoBoxButton;
 	public JoystickButton cargoBoxHeldButton;
+	public POVButton upDPadButton;
+	public POVButton downDPadButton;
+	public POVButton leftDPadButton;
+	public POVButton rightDPadButton;
+
+
 	// public JoystickButton raiseIntakeButton;
 	// public JoystickButton lowerIntakeButton;
 	// public JoystickButton intakeButton;
@@ -50,11 +58,6 @@ public class OI {
 	// public JoystickButton pivotTestButton;
 	
 	public OI() {
-		jackBlack = new Joystick(0);
-		whiteKnight = new Joystick(1);
-
-		// jackBlack.setRumble(RumbleType.kLeftRumble, 1.0); //1.0 is rumble, 0.0 is off
-		// jackBlack.setRumble(RumbleType.kRightRumble, 1.0);
 
 		//The code below is for two XBox controllers. Add a /* at the beginning
 		//and */ at the end to deactivate this code, and remove them to activate.
@@ -62,6 +65,22 @@ public class OI {
 
 		//START
 		// First Competition Controls:
+
+		jackBlack = new Joystick(0);
+		whiteKnight = new Joystick(1);
+
+		// Trigger Mapping for XBox Controllers **NEEDS TO BE TESTED**
+		// if (jackBlack.getRawAxis(2) > .70) {
+		// 	new PincherBite_Command();
+		// }
+
+		// DPad Mapping for XBox controllers **NEEDS TO BE TESTED**
+		// upDPadButton = new POVButton(whiteKnight, 0);
+		// upDPadButton.whenPressed(new PincherBite_Command());
+
+		// Rumble Mapping for XBox controllers **NEEDS TO BE TESTED**
+		// jackBlack.setRumble(RumbleType.kLeftRumble, 1.0); //1.0 is rumble, 0.0 is off
+		// jackBlack.setRumble(RumbleType.kRightRumble, 1.0);
 
 		bitePincherButton = new JoystickButton(whiteKnight, 1); //A, 1
 		bitePincherButton.whenPressed(new PincherBite_Command());
