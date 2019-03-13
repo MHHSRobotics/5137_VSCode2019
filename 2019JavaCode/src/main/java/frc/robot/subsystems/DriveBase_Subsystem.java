@@ -3,7 +3,8 @@ package frc.robot.subsystems;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -18,6 +19,7 @@ public class DriveBase_Subsystem extends Subsystem {
 	
 	public static double driveSpeed = 0; // for DisplayValues
 
+	NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 
 	protected void initDefaultCommand() {
 		setDefaultCommand(new ArcadeDrive());
@@ -52,7 +54,7 @@ public class DriveBase_Subsystem extends Subsystem {
 		// double gearDownFour = 10.00;
 		double stopDistance = 7.00;
 
-		Robot.limelightLED = true;
+		table.getEntry("camMode").setNumber(0); //0 is vision processing, 1 is driver camera
         
         if (centerX - targetX > 3 && rightDistanceIN >= gearDownOne) {
 		RobotMap.hotWheels.arcadeDrive(-.3, .65);
@@ -122,7 +124,7 @@ public class DriveBase_Subsystem extends Subsystem {
 	
 	public void stop() {
 		hotWheels.arcadeDrive(0, 0);
-		Robot.limelightLED = false;
+		table.getEntry("camMode").setNumber(1); //0 is vision processing, 1 is driver camera
 	}
 
 

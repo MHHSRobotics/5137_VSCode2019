@@ -157,15 +157,7 @@ public class Robot extends TimedRobot {
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ta = table.getEntry("ta");
 
-    // if (limelightLED = false) {
-    // System.out.print("LED off");
     // table.getEntry("ledMode").setNumber(1); //1 is off 3 is on
-    // }
-
-    // if (limelightLED = true) {
-    // System.out.print("LED on");
-    // table.getEntry("ledMode").setNumber(3); //1 is off 3 is on
-    // }
 
   //read values periodically
   targetX = tx.getDouble(0.0);
