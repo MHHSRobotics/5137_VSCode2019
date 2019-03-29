@@ -7,14 +7,25 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class AimBot_Command extends Command {
+
+  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  int pipelineNumber;
+
   public AimBot_Command() {
     requires(Robot.driveBase_Subsystem);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+  }
+
+  public AimBot_Command(int target) {
+    requires(Robot.lift_Subsystem);
+    pipelineNumber = target;
   }
 
   // Called just before this Command runs the first time
@@ -25,7 +36,7 @@ public class AimBot_Command extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveBase_Subsystem.VisionDrive();
+    Robot.driveBase_Subsystem.VisionDrive(pipelineNumber);
   }
 
   // Make this return true when this Command no longer needs to run execute()

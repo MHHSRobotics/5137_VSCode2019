@@ -42,8 +42,13 @@ public class DriveBase_Subsystem extends Subsystem {
 	 * That allows one joystick on a controller to control both forwards/backwards and left and right (via SlideDrive)
 	 * and delegates rotation to a different joystick
 	 */
-	public void VisionDrive() {
-    
+	public void VisionDrive(int pipeline) {
+	
+		/*case one is center target,
+		case two is left,
+		case three is right,
+		*/
+
 		double centerX = Robot.centerX;
 		double targetX = Robot.targetX;
 		double rightDistanceIN = Robot.rightDistanceIN;
@@ -54,8 +59,23 @@ public class DriveBase_Subsystem extends Subsystem {
 		// double gearDownFour = 10.00;
 		double stopDistance = 7.00;
 
-		table.getEntry("camMode").setNumber(0); //0 is vision processing, 1 is driver camera
-        
+		// stops limelight targeting if too close to the target
+
+		if (rightDistanceIN >= stopDistance) {
+		switch (pipeline) {
+
+			case 1: table.getEntry("pipeline").setNumber(0); //sets pipeline number 1-9 
+			 break;
+			case 2: table.getEntry("pipeline").setNumber(2); //sets pipeline number 1-9
+			 break;
+			case 3: table.getEntry("pipeline").setNumber(3); //sets pipeline number 1-9
+			 break;    
+	  
+		  }
+		}
+
+		// table.getEntry("pipeline").setNumber(0); //sets pipeline number 1-9
+
         if (centerX - targetX > 3 && rightDistanceIN >= gearDownOne) {
 		RobotMap.hotWheels.arcadeDrive(-.3, .65);
 		}
@@ -124,7 +144,7 @@ public class DriveBase_Subsystem extends Subsystem {
 	
 	public void stop() {
 		hotWheels.arcadeDrive(0, 0);
-		table.getEntry("camMode").setNumber(1); //0 is vision processing, 1 is driver camera
+		table.getEntry("pipeline").setNumber(1); //sets pipeline number 1-9
 	}
 
 

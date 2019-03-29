@@ -47,8 +47,6 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 
   public static UsbCamera frontCamera;
-  public static UsbCamera leftCamera;
-  public static UsbCamera rightCamera;
   public static Object imgLock;
 
   public static double centerX = 0.0;
@@ -76,10 +74,12 @@ public class Robot extends TimedRobot {
 
   int ultraCounter = 0;
 
+  NetworkTable table;
+
   // private final SendableChooser<String> Chooser = new SendableChooser<>();
 
   /*
-   * This function is run when the robot is first started up and should be
+   * The following function "robotInit()" is run when the robot is first started up and should be
    * used for any initialization code.
    */
 
@@ -96,18 +96,9 @@ public class Robot extends TimedRobot {
 		oi = new OI(); // gotta go after all the subsystems!
 
 
-    frontCamera = CameraServer.getInstance().startAutomaticCapture();
-		frontCamera.setResolution(320, 240);
-    frontCamera.setFPS(30); 
-    
-    // leftCamera = CameraServer.getInstance().startAutomaticCapture();
-		// leftCamera.setResolution(320, 240);
-    // leftCamera.setFPS(30); 
-    
-    // rightCamera = CameraServer.getInstance().startAutomaticCapture();
-		// rightCamera.setResolution(320, 240);
-		// rightCamera.setFPS(30); 
-
+    // frontCamera = CameraServer.getInstance().startAutomaticCapture();
+		// frontCamera.setResolution(320, 240);
+    // frontCamera.setFPS(30); 
 
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
@@ -115,6 +106,9 @@ public class Robot extends TimedRobot {
 
     rightUltrasonic.setAutomaticMode(true); // turns on automatic mode for right ultrasonic
     leftUltrasonic.setAutomaticMode(true); // turns on automatic mode for left ultrasonic
+
+    table = NetworkTableInstance.getDefault().getTable("limelight");
+    table.getEntry("pipeline").setNumber(1); //sets pipeline number 1-9
 
   }
 
@@ -153,10 +147,12 @@ public class Robot extends TimedRobot {
     // bring up back at 24-25
     // stop at about 16-17
 
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ta = table.getEntry("ta");
-
+    
+    // table.getEntry("stream").setNumber(0); //0 is standard (2 cameras side by side)
+    // 1 is the secondary camera in the corner, 2 is reversed
     // table.getEntry("ledMode").setNumber(1); //1 is off 3 is on
 
   //read values periodically

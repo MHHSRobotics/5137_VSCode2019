@@ -40,7 +40,13 @@ public class OI {
 	public JoystickButton lowerFrontButton;
 	public JoystickButton lowerBackButton;
 	public JoystickButton driveLiftButton;
+
 	public JoystickButton aimBotButton;
+
+	public JoystickButton leftAimBotButton;
+	public JoystickButton rightAimBotButton;
+	public JoystickButton centerAimBotButton;
+
 	public JoystickButton cargoBoxButton;
 	public JoystickButton cargoBoxHeldButton;
 	public POVButton upDPadButton;
@@ -95,16 +101,28 @@ public class OI {
 		cargoBoxHeldButton.whileHeld(new CargoBoxHeld_Command());
 		cargoBoxHeldButton.whenReleased(new CargoBoxReleased_Command());
 
-		aimBotButton = new JoystickButton(jackBlack, 1); //A, 1
-		aimBotButton.whileHeld(new AimBot_Command());
+		// aimBotButton = new JoystickButton(jackBlack, 1); //A, 1
+		// aimBotButton.whileHeld(new AimBot_Command());
+
+		centerAimBotButton = new JoystickButton(jackBlack, 1); //A, 1
+		centerAimBotButton.whileHeld(new AimBot_Command(1));
+
+		leftAimBotButton = new JoystickButton(jackBlack, 5); //left bumper, 5
+		leftAimBotButton.whileHeld(new AimBot_Command(2));
+
+		rightAimBotButton = new JoystickButton(jackBlack, 6); //right bumper, 6
+		rightAimBotButton.whileHeld(new AimBot_Command(3));
 
 		// liftRobotButton = new JoystickButton(jackBlack, 4); //Y, 4
 		// liftRobotButton.whileHeld(new LiftRobot_Command());
 
-		liftFrontButton = new JoystickButton(jackBlack, 5); //left bumper, 5
+		driveLiftButton = new JoystickButton(jackBlack, 4); //start button
+		driveLiftButton.whileHeld(new LiftDrive_Command());
+
+		liftFrontButton = new JoystickButton(jackBlack, 7); //select button, 7
 		liftFrontButton.whileHeld(new FrontLift_Command());
 
-		liftBackButton = new JoystickButton(jackBlack, 6); //right bumper, 6
+		liftBackButton = new JoystickButton(jackBlack, 8); //select button, 8
 		liftBackButton.whileHeld(new BackLift_Command());
 		
 		lowerFrontButton = new JoystickButton(jackBlack, 3); //X, 3
