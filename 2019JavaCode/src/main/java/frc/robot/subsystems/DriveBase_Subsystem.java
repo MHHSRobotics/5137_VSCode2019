@@ -4,8 +4,11 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -20,6 +23,32 @@ public class DriveBase_Subsystem extends Subsystem {
 	public static double driveSpeed = 0; // for DisplayValues
 
 	NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+	NetworkTableEntry tx = table.getEntry("tx");
+	/*---------------------------------------------*/
+	// pid loop variables:
+
+	private static final double kHoldDistance = 12.0;
+
+	// maximum distance in inches we expect the robot to see
+	private static final double kMaxDistance = 24.0;
+  
+	// factor to convert sensor values to a distance in inches
+	private static final double kValueToInches = 0.125;
+  
+	// proportional speed constant
+	private static final double kP = 7.0;
+  
+	// integral speed constant
+	private static final double kI = 0.018;
+  
+	// derivative speed constant
+	private static final double kD = 1.5;
+
+	private final PIDController m_pidController
+		= new PIDController(kP, kI, kD, , new MyPidOutput());
+
+	/*--------------------------------------------*/
+
 
 	protected void initDefaultCommand() {
 		setDefaultCommand(new ArcadeDrive());
@@ -36,7 +65,16 @@ public class DriveBase_Subsystem extends Subsystem {
 		}
 		return adjustedJoystick;
 	}
-	
+
+
+	private class MyPidOutput implements PIDOutput {
+		@Override
+		public void pidWrite(double output) {
+		  hotWheels.arcadeDrive(0, output);
+		}
+	  }
+
+
 	/* 
 	 * Arcade Drive is a form of driving...
 	 * That allows one joystick on a controller to control both forwards/backwards and left and right (via SlideDrive)
@@ -76,14 +114,14 @@ public class DriveBase_Subsystem extends Subsystem {
 
 		// table.getEntry("pipeline").setNumber(0); //sets pipeline number 1-9
 
-        if (centerX - targetX > 3 && rightDistanceIN >= gearDownOne) {
+        if (centerX - targetX > 3.3 && rightDistanceIN >= gearDownOne) {
 		RobotMap.hotWheels.arcadeDrive(-.3, .65);
 		}
-		else if (centerX - targetX < -3 && rightDistanceIN >= gearDownOne) {
+		else if (centerX - targetX < -3.3 && rightDistanceIN >= gearDownOne) {
 		RobotMap.hotWheels.arcadeDrive(-.3, -.65);
 		}
 		else if (rightDistanceIN >= gearDownOne) {
-			RobotMap.hotWheels.arcadeDrive(-.65, 0);
+			RobotMap.hotWheels.arcadeDrive(-.68, 0);
 			System.out.print("gear down first");
 			}
 		else if (rightDistanceIN <= stopDistance) {

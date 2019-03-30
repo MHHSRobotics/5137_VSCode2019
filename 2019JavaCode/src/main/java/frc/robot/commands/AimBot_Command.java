@@ -36,7 +36,11 @@ public class AimBot_Command extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+
     Robot.driveBase_Subsystem.VisionDrive(pipelineNumber);
+
+    // Robot.aiming_PIDSubsystem.myUsePIDOutput(Robot.aiming_PIDSubsystem.pidOutput);
+  
   }
 
   // Make this return true when this Command no longer needs to run execute()

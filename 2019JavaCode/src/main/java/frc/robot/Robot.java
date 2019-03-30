@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
-
+import frc.robot.subsystems.Aiming_PIDSubsystem;
 import frc.robot.subsystems.CargoBox_Subsystem;
 import frc.robot.subsystems.DriveBase_Subsystem;
 import frc.robot.subsystems.Lift_Subsystem;
@@ -40,6 +40,7 @@ public class Robot extends TimedRobot {
   public static Pincher_Subsystem pincher_Subsystem;	
   public static CargoBox_Subsystem cargoBox_Subsystem;
   public static Lift_Subsystem lift_Subsystem;
+  public static Aiming_PIDSubsystem aiming_PIDSubsystem;
 
   public static boolean liftMode = false;
   public static boolean manualControl = false;
@@ -92,6 +93,7 @@ public class Robot extends TimedRobot {
 	  pincher_Subsystem = new Pincher_Subsystem();
     cargoBox_Subsystem = new CargoBox_Subsystem();
     lift_Subsystem = new Lift_Subsystem();
+    aiming_PIDSubsystem = new Aiming_PIDSubsystem();
     
 		oi = new OI(); // gotta go after all the subsystems!
 
@@ -128,12 +130,6 @@ public class Robot extends TimedRobot {
     rightDistanceIN = rightUltrasonic.getRangeInches();
     leftDistanceIN = leftUltrasonic.getRangeInches();
     // System.out.println("Left Ultrasonic Reading:" + leftDistanceIN);
-    System.out.println();
-
-    if (ultraCounter++ == 10) {
-    System.out.println("Right Ultrasonic Reading:" + rightDistanceIN);
-    ultraCounter = 0;
-    }
     // if (checkInit == true) {
     //   goodValue = rightDistanceIN;
     //   checkInit = false;
@@ -142,27 +138,20 @@ public class Robot extends TimedRobot {
     // if (Math.abs(goodValue - rightDistanceIN) < 10 ) {
     //   goodValue = rightDistanceIN;
     // }
-    
-    // bring front wheels up at 45 inches 
-    // bring up back at 24-25
-    // stop at about 16-17
 
     table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ta = table.getEntry("ta");
     
+
     // table.getEntry("stream").setNumber(0); //0 is standard (2 cameras side by side)
     // 1 is the secondary camera in the corner, 2 is reversed
-    // table.getEntry("ledMode").setNumber(1); //1 is off 3 is on
 
   //read values periodically
   targetX = tx.getDouble(0.0);
   targetArea = ta.getDouble(0.0);
   
-  // SmartDashboard.putNumber("LimelightX", targetX);
-  // SmartDashboard.putNumber("LimelightArea", targetArea);
-  // SmartDashboard.putNumber("LimelightCorner0X", cornerx[0]);
-  // SmartDashboard.putNumber("LimelightCorner0Y", cornery[0]);
+  System.out.println("Robot." + targetX);
 
 }
   /**

@@ -2,14 +2,25 @@ package frc.robot;
 
 import java.util.ArrayList;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 /**
  * A Simple Driver for the Limelight
  */
 
-public class Limelight{
+public class Limelight implements PIDSource {
+
+    NetworkTable table =  NetworkTableInstance.getDefault().getTable("limelight");
+    NetworkTableEntry tx = table.getEntry("tx");
+    NetworkTableEntry ta = table.getEntry("ta");
+
+
 
     /**
      * An enum storing potential LED states.
@@ -150,4 +161,19 @@ public class Limelight{
     private void set(String varName, double value){
         NetworkTableInstance.getDefault().getTable(mTableName).getEntry(varName).setNumber(value);
     }
+
+    @Override
+    public void setPIDSourceType(PIDSourceType pidSource) {
+
+    }
+
+    @Override
+    public PIDSourceType getPIDSourceType() {
+        return null;
+    }
+
+    @Override
+    public double pidGet() {
+        return 0;
+	}
 }
