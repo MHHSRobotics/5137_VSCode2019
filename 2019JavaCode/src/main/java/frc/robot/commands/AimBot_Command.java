@@ -38,7 +38,8 @@ public class AimBot_Command extends Command {
   protected void execute() {
 
     Robot.driveBase_Subsystem.VisionDrive(pipelineNumber);
-
+    // table.getEntry("pipeline").setNumber(0); //sets pipeline number 1-9 
+    // Robot.aiming_PIDSubsystem.enable();
     // Robot.aiming_PIDSubsystem.myUsePIDOutput(Robot.aiming_PIDSubsystem.pidOutput);
   
   }
@@ -53,6 +54,8 @@ public class AimBot_Command extends Command {
   @Override
   protected void end() {
     Robot.driveBase_Subsystem.stop();
+    // table.getEntry("pipeline").setNumber(1); //sets pipeline number 1-9 
+    // Robot.aiming_PIDSubsystem.disable();
   }
 
   // Called when another command which requires one or more of the same

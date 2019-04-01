@@ -48,6 +48,7 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 
   public static UsbCamera frontCamera;
+  public static UsbCamera frontCamera2;
   public static Object imgLock;
 
   public static double centerX = 0.0;
@@ -98,9 +99,14 @@ public class Robot extends TimedRobot {
 		oi = new OI(); // gotta go after all the subsystems!
 
 
-    // frontCamera = CameraServer.getInstance().startAutomaticCapture();
-		// frontCamera.setResolution(320, 240);
-    // frontCamera.setFPS(30); 
+    frontCamera = CameraServer.getInstance().startAutomaticCapture();
+		frontCamera.setResolution(144, 60);
+    frontCamera.setFPS(60); 
+
+
+    frontCamera2 = CameraServer.getInstance().startAutomaticCapture();
+		frontCamera2.setResolution(144, 60);
+    frontCamera2.setFPS(60); 
 
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);

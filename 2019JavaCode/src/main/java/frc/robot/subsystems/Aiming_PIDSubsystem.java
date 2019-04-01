@@ -30,7 +30,7 @@ public class Aiming_PIDSubsystem extends PIDSubsystem {
     // enable() - Enables the PID controller.
 
     setSetpoint(0.0);
-    enable();
+    // enable();
   }
 
   @Override
@@ -50,16 +50,18 @@ public class Aiming_PIDSubsystem extends PIDSubsystem {
 
     System.out.print("TargetX" + targetX);
 
-    return centerX - targetX;
+    return targetX;
   }
 
   @Override
   protected void usePIDOutput(double output) {
     // Use output to drive your system, like a motor
     // e.g. yourMotor.set(output);
+    System.out.print("RUNNING PID");
+    
     System.out.print("PIDOutput:" + output);
     
-    RobotMap.hotWheels.arcadeDrive(0, output);
+    // RobotMap.hotWheels.arcadeDrive(0, output);
     pidOutput = output;
   }
 
