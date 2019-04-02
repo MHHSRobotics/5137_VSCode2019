@@ -7,7 +7,9 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
@@ -23,7 +25,7 @@ public class Aiming_PIDSubsystem extends PIDSubsystem {
 
   public Aiming_PIDSubsystem() {
     // Intert a subsystem name and PID values here
-    super("Aiming_PIDSubsystem", 3.0, 0.001, 0.0);
+    super("Aiming_PIDSubsystem", .05, 0.001, 0.0);
     // Use these to get going:
     // setSetpoint() - Sets where the PID controller should move the system
     // to
@@ -61,7 +63,8 @@ public class Aiming_PIDSubsystem extends PIDSubsystem {
     
     System.out.print("PIDOutput:" + output);
     
-    // RobotMap.hotWheels.arcadeDrive(0, output);
+
+    RobotMap.hotWheels.arcadeDrive(OI.jackBlack.getRawAxis(1), output);
     pidOutput = output;
   }
 

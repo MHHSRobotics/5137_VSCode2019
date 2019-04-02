@@ -157,7 +157,7 @@ public class Robot extends TimedRobot {
   targetX = tx.getDouble(0.0);
   targetArea = ta.getDouble(0.0);
   
-  System.out.println("Robot." + targetX);
+  // System.out.println("Robot." + targetX);
 
 }
   /**

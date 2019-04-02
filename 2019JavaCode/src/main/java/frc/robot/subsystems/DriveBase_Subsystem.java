@@ -10,6 +10,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -25,6 +27,7 @@ public class DriveBase_Subsystem extends Subsystem {
 
 	NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 	NetworkTableEntry tx = table.getEntry("tx");
+	double targetX = tx.getDouble(0.0);
 	/*---------------------------------------------*/
 	// pid loop variables:
 
@@ -37,19 +40,26 @@ public class DriveBase_Subsystem extends Subsystem {
 	private static final double kValueToInches = 0.125;
   
 	// proportional speed constant
-	private static final double kP = 7.0;
+	private static final double kP = .07;
   
 	// integral speed constant
-	private static final double kI = 0.018;
+	private static final double kI = 0.0;
   
 	// derivative speed constant
-	private static final double kD = 1.5;
+	private static final double kD = 0.0;
 
-	// private final PIDController m_pidController
-	// 	= new PIDController(kP, kI, kD, Limelight, new MyPidOutput());
+	public Limelight limelight = new Limelight();
+	public MyPidOutput myPidOutput = new MyPidOutput();
 
+	 public PIDController m_pidController
+		= new PIDController(kP, kI, kD, limelight, myPidOutput);		
+	
 	/*--------------------------------------------*/
 
+	public DriveBase_Subsystem() {
+		m_pidController.setSetpoint(0.0);
+		m_pidController.setOutputRange(.3, .7);
+	}
 
 	protected void initDefaultCommand() {
 		setDefaultCommand(new ArcadeDrive());
@@ -68,12 +78,17 @@ public class DriveBase_Subsystem extends Subsystem {
 	}
 
 
-	// private class MyPidOutput implements PIDOutput {
-	// 	@Override
-	// 	public void pidWrite(double output) {
-	// 	  hotWheels.arcadeDrive(0, output);
-	// 	}
-	//   }
+	public class MyPidOutput implements PIDOutput {
+		@Override
+		public void pidWrite(double output) {
+		  hotWheels.arcadeDrive(0, output);
+		  System.out.println("AIMING");
+		  System.out.println(output);
+		  System.out.println(Robot.targetX);
+		  
+		  
+		}
+	  }
 
 
 	/* 
